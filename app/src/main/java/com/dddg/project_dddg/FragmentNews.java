@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.lang.annotation.Documented;
@@ -46,27 +49,9 @@ public class FragmentNews extends Fragment {
         // 임시 recyclerview 테스트를 위한 NewsData세팅
         // 나중에 들어가는게 제일 상단 배치
         newsData.clear();
-        newsData.add(new NewsData("네이버 접속17","네이버 접속하기","https://www.naver.com/"));
-        newsData.add(new NewsData("다음 접속16","다음 접속하기","https://www.daum.net/"));
-        newsData.add(new NewsData("구글 접속15","구글 접속하기","https://www.google.co.kr/"));
-        newsData.add(new NewsData("아마존 접속14","아마존 접속하기","https://www.amazon.com/"));
-        newsData.add(new NewsData("인벤 접속13","인벤 접속하기","http://www.inven.co.kr/"));
-        newsData.add(new NewsData("다음 접속12","다음 접속하기","https://www.daum.net/"));
-        newsData.add(new NewsData("구글 접속11","구글 접속하기","https://www.google.co.kr/"));
-        newsData.add(new NewsData("아마존 접속10","아마존 접속하기","https://www.amazon.com/"));
-        newsData.add(new NewsData("인벤 접속9","인벤 접속하기","http://www.inven.co.kr/"));
-        newsData.add(new NewsData("다음 접속8","다음 접속하기","https://www.daum.net/"));
-        newsData.add(new NewsData("구글 접속7","구글 접속하기","https://www.google.co.kr/"));
-        newsData.add(new NewsData("아마존 접속6","아마존 접속하기","https://www.amazon.com/"));
-        newsData.add(new NewsData("인벤 접속5","인벤 접속하기","http://www.inven.co.kr/"));
-        newsData.add(new NewsData("다음 접속4","다음 접속하기","https://www.daum.net/"));
-        newsData.add(new NewsData("구글 접속3","구글 접속하기","https://www.google.co.kr/"));
-        newsData.add(new NewsData("아마존 접속2","아마존 접속하기","https://www.amazon.com/"));
-        newsData.add(new NewsData("인벤 접속1","인벤 접속하기","http://www.inven.co.kr/"));
         //필요한작업
         //NewsData를 크롤링으로 받아서 세팅 1.뉴스제목  2.뉴스내용  3.뉴스 링크
         //SwipeRefreshLayout를 이용하면 NewsData 새로고침 업데이트 가능
-
     }
 
     @Nullable
@@ -80,9 +65,9 @@ public class FragmentNews extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recyclerView = getView().findViewById(R.id.news_recyclerview);
-        layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,true); //true는 최근것이 제일 위로
-        layoutManager.setStackFromEnd(true);// recyclerview가 위에서 부터 체워진다
+        layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false); //true는 최근것이 제일 위로
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         adapter = new NewsRVAdapter(newsData);
         adapter.setOnItemClickListener(new NewsRVAdapter.OnItemClickListener(){
             @Override
@@ -94,6 +79,37 @@ public class FragmentNews extends Fragment {
             }
         });
         recyclerView.setAdapter(adapter);
+        new Thread(){
+            @Override
+            public void run() {
+                String  NewsUrl = "http://www.inven.co.kr/webzine/news/?page=1";
+                Document doc = null;
+                try {
+                    doc = Jsoup.connect(NewsUrl).get();
+                    Elements newsList = doc.select("div.webzineNewsList.tableType2 tr");
+                    for(Element list: newsList){
+                        newsData.add(new NewsData( list.select("span.title a").text(),
+                                list.select("span.summary").text(),
+                                list.select("img.banner").attr("src"),
+                                list.select("span.title a").attr("href")));
+                        Log.d("로그",list.select("img.banner").attr("src"));
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                finally{
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+
+        }.start();
+
     }
 
     @Override
