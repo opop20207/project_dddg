@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -94,12 +95,13 @@ public class FragmentNews extends Fragment {
                                 list.select("span.title a").attr("href")));
                         Log.d("로그",list.select("img.banner").attr("src"));
                     }
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 finally{
-                    getActivity().runOnUiThread(new Runnable() {
+                    FragmentActivity fragmentActivity = getActivity();
+                    if(fragmentActivity != null)
+                    fragmentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             adapter.notifyDataSetChanged();
