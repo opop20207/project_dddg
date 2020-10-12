@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.dddg.project_dddg.auth.AuthActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
