@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".auth.FirebaseUiActivity">
 
+    
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
