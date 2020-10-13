@@ -37,6 +37,7 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.ViewHolder
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.newsTitle.setText(NewsList.get(position).title.toString());
         holder.newsContext.setText(NewsList.get(position).context.toString());
+        holder.newsInfo.setText(NewsList.get(position).info.toString());
         Glide.with(holder.itemView).load(NewsList.get(position).img_url.toString()).into(holder.newsImg);
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -56,6 +57,7 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.ViewHolder
     class ViewHolder extends RecyclerView.ViewHolder{
         public TextView newsTitle = itemView.findViewById(R.id.news_item_title);
         public TextView newsContext = itemView.findViewById(R.id.news_item_context);
+        public TextView newsInfo = itemView.findViewById(R.id.news_item_info);
         public ImageView newsImg = itemView.findViewById(R.id.news_item_img);
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

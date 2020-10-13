@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="@drawable/item_underline_box"
     android:padding="3dp">
 
     <TextView
@@ -12,28 +12,40 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_margin="1dp"
-        android:background="@drawable/item_whtie_box"
+        android:background="#00FFFFFF"
         android:text="제목"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/news_item_info"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="20dp"
+        android:text="정보"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/news_item_title" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/news_item_title">
+        app:layout_constraintTop_toBottomOf="@+id/news_item_info"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:id="@+id/news_item_img"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_weight="5"
-            android:background="@drawable/item_whtie_box"
+            android:background="#00FFFFFF"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
@@ -42,7 +54,7 @@
             android:layout_height="70dp"
             android:layout_margin="1dp"
             android:layout_weight="1"
-            android:background="@drawable/item_whtie_box"
+            android:background="#00FFFFFF"
             android:text="내용" />
     </LinearLayout>
 

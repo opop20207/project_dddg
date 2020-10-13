@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -37,7 +40,11 @@ public class FragmentNews extends Fragment {
     LinearLayoutManager layoutManager;
     NewsRVAdapter adapter;
     ArrayList<NewsData> newsData = new ArrayList<NewsData>(Arrays.asList(new NewsData()));
-
+    FloatingActionButton next;
+    FloatingActionButton prev;
+    TextView pagenum;
+    int MaxPage = 1; //최대 페이지
+    int webpage_num = 1;// 현재 페이지
     public static FragmentNews getInstance(){
         if(instance==null){
             instance = new FragmentNews();
@@ -47,12 +54,7 @@ public class FragmentNews extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 임시 recyclerview 테스트를 위한 NewsData세팅
-        // 나중에 들어가는게 제일 상단 배치
         newsData.clear();
-        //필요한작업
-        //NewsData를 크롤링으로 받아서 세팅 1.뉴스제목  2.뉴스내용  3.뉴스 링크
-        //SwipeRefreshLayout를 이용하면 NewsData 새로고침 업데이트 가능
     }
 
     @Nullable
@@ -65,6 +67,9 @@ public class FragmentNews extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        next = getView().findViewById(R.id.next_page_button);
+        prev = getView().findViewById(R.id.previous_page_button);
+        pagenum = getView().findViewById(R.id.news_pagenum);
         recyclerView = getView().findViewById(R.id.news_recyclerview);
         layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false); //true는 최근것이 제일 위로
         recyclerView.setLayoutManager(layoutManager);
@@ -80,40 +85,75 @@ public class FragmentNews extends Fragment {
             }
         });
         recyclerView.setAdapter(adapter);
-        new Thread(){
+        Loaddata loadData = new Loaddata();
+        loadData.start();
+
+
+        next.setOnClickListener(new View.OnClickListener() { //다음칸
             @Override
-            public void run() {
-                String  NewsUrl = "http://www.inven.co.kr/webzine/news/?page=1";
-                Document doc = null;
-                try {
-                    doc = Jsoup.connect(NewsUrl).get();
-                    Elements newsList = doc.select("div.webzineNewsList.tableType2 tr");
-                    for(Element list: newsList){
-                        newsData.add(new NewsData( list.select("span.title a").text(),
-                                list.select("span.summary").text(),
-                                list.select("img.banner").attr("src"),
-                                list.select("span.title a").attr("href")));
-                        Log.d("로그",list.select("img.banner").attr("src"));
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+            public void onClick(View v) {
+                webpage_num++;
+                Loaddata loadData = new Loaddata();
+                loadData.start();
+            }
+        });
+
+        prev.setOnClickListener(new View.OnClickListener() { //이전칸
+            @Override
+            public void onClick(View v) {
+                webpage_num--;
+                Loaddata loadData = new Loaddata();
+                loadData.start();
+            }
+        });
+    }
+    public class Loaddata extends Thread{
+        Loaddata(){
+
+        }
+        @Override
+        public void run() {
+            super.run();
+            String  NewsUrl = "http://www.inven.co.kr/webzine/news/?sclass=31&iskin=esports&page="+ Integer.toString(webpage_num);
+            Document doc = null;
+            try {
+                doc = Jsoup.connect(NewsUrl).get();
+                MaxPage = Integer.parseInt(doc.select("span.basetext > a:last-of-type").text().toString());
+                // 최대 페이지 추출
+                Elements newsList = doc.select("div.webzineNewsList.tableType2 tr");
+                // 현재 화면 뉴스 리스트 추출
+                newsData.clear();
+                for(Element list: newsList){  //뉴스 item 갱신부분
+                    newsData.add(new NewsData( list.select("span.title a").text(),
+                            list.select("span.summary").text(),
+                            list.select("img.banner").attr("src"),
+                            list.select("span.title a").attr("href"),
+                            list.select("span.info").text()));
                 }
-                finally{
-                    FragmentActivity fragmentActivity = getActivity();
-                    if(fragmentActivity != null)
+
+                FragmentActivity fragmentActivity  = getActivity();
+                if(fragmentActivity != null)
                     fragmentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            adapter.notifyDataSetChanged();
+                            // 새로 고침 목록
+                            Log.d("로그","adapter.notifyDataSetChanged() 호출");
+                            adapter.notifyDataSetChanged(); //recyclerview 갱신
+                            if(webpage_num <= 1) prev.setVisibility(View.GONE);
+                            else prev.setVisibility(View.VISIBLE);
+                            if(webpage_num >= MaxPage) next.setVisibility(View.GONE);
+                            else next.setVisibility(View.VISIBLE);
+                            pagenum.setText(Integer.toString(webpage_num)+"/"+Integer.toString(MaxPage));
+                            // 버튼 및 페이지 넘버링
                         }
                     });
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }
 
-        }.start();
 
     }
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
