@@ -4,21 +4,21 @@ public class MatchData {
     String date;
     String title;
     String stage;
-    String  winteam;
-    String  gamescore;
-    String  gametime;
-    String  team1_name;
-    String  team2_name;
-    String  team1_teamscore;
-    String  team2_teamscore;
-    String  team1_playername;
-    String  team2_playername;
-    String  team1_playerscore;
-    String  team2_playerscore;
-    String  team1_champ;
-    String  team2_champ;
-    String  team1_ban;
-    String  team2_ban;
+    String winteam;
+    String gamescore;
+    String gametime;
+    String team1_name;
+    String team2_name;
+    String team1_teamscore;
+    String team2_teamscore;
+    String team1_playername;
+    String team2_playername;
+    String team1_playerscore;
+    String team2_playerscore;
+    String team1_champ;
+    String team2_champ;
+    String team1_ban;
+    String team2_ban;
     public MatchData(){
 
     }
