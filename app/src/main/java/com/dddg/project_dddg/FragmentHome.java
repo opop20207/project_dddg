@@ -1,6 +1,7 @@
 package com.dddg.project_dddg;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,9 @@ public class FragmentHome extends Fragment {
         adapter.setOnItemClickListener(new MatchRVAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
+                Intent detailintent = new Intent(getActivity(), MatchDetailInfo.class);
+                detailintent.putExtra("matchdata", matchData.get(position));
+                startActivity(detailintent);
                 // 클릭되었을때
             }
         });
