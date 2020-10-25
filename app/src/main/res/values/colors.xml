@@ -8,4 +8,7 @@
     <color name="subLightBlue">#C9D3F1</color>
     <color name="backgroundBlue">#E6E9F1</color>
     <color name="subRed">#DE7070</color>
+    <color name="killRed">#ED4242</color>
+    <color name="deathBrown">#2E0C0C</color>
+    <color name="asistBlue">#4272ED</color>
 </resources>

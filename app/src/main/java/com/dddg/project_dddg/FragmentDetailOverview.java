@@ -3,30 +3,52 @@ package com.dddg.project_dddg;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionManager;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Constraints;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBarChangeListener,
         OnChartValueSelectedListener {
@@ -40,7 +62,8 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
         return instance;
     }
     PieChart vote_rate;
-    SeekBar seekBarX,seekBarY;
+    BarChart kill_Red;
+    BarChart kill_Blue;
     int red_vote,blue_vote;
     MatchData matchData;
     @Nullable
@@ -59,13 +82,13 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         matchData = (MatchData) getActivity().getIntent().getSerializableExtra("matchdata");
+        kill_Red = getView().findViewById(R.id.detail_teamRed_kill_chart);
+        kill_Blue = getView().findViewById(R.id.detail_teamBlue_kill_chart);
+        kill_Red.setVisibility(View.GONE);
+        kill_Blue.setVisibility(View.GONE);
         {
-            seekBarX = getView().findViewById(R.id.seekBar1);
-            seekBarY = getView().findViewById(R.id.seekBar2);
-            seekBarX.setOnSeekBarChangeListener(this);
-            seekBarY.setOnSeekBarChangeListener(this);
             vote_rate = getView().findViewById(R.id.detail_overview_pie);
-            vote_rate.setUsePercentValues(true);
+            vote_rate.setUsePercentValues(false);
             vote_rate.getDescription().setEnabled(false);
             vote_rate.setExtraOffsets(5, 10, 5, 5);
             vote_rate.setDragDecelerationFrictionCoef(0.95f);
@@ -81,18 +104,53 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
             vote_rate.setHighlightPerTapEnabled(true);
             vote_rate.setOnChartValueSelectedListener(this);
             vote_rate.animateY(1400, Easing.EaseInOutQuad);
+            vote_rate.setTouchEnabled(true);
         } //파이 차트 관련
+        {
+            kill_Red.setOnChartValueSelectedListener(this);
+            kill_Blue.setOnChartValueSelectedListener(this);
+            kill_Red.getDescription().setEnabled(false);
+            kill_Blue.getDescription().setEnabled(false);
+            kill_Red.setPinchZoom(false);
+            kill_Blue.setPinchZoom(false);
+            kill_Red.setDrawBarShadow(false);
+            kill_Blue.setDrawBarShadow(false);
+            kill_Red.setDrawGridBackground(false);
+            kill_Blue.setDrawGridBackground(false);
+            kill_Red.getAxisLeft().setDrawGridLines(false);
+            kill_Red.getXAxis().setDrawGridLines(false);
+            kill_Blue.getAxisLeft().setDrawGridLines(false);
+            kill_Blue.getXAxis().setDrawGridLines(false);
+            kill_Red.setDoubleTapToZoomEnabled(false);
+            kill_Blue.setDoubleTapToZoomEnabled(false);
+            kill_Red.animateY(3000, Easing.EaseInOutQuad);
+            kill_Blue.animateY(3000, Easing.EaseInOutQuad);
+            Legend R = kill_Red.getLegend();
+            R.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+            R.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+            R.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+            R.setWordWrapEnabled(true);
+            R.setTextColor(Color.BLACK);
+            R.setForm(Legend.LegendForm.CIRCLE);
+            Legend B = kill_Blue.getLegend();
+            B.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+            B.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+            B.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+            B.setWordWrapEnabled(true);
+            B.setTextColor(Color.BLACK);
+            B.setForm(Legend.LegendForm.CIRCLE);
+        }// 바 차트 관련
         red_vote = Integer.parseInt(matchData.gamescore.split("/")[0]);
-        blue_vote = Integer.parseInt(matchData.gamescore.split("/")[1]);//임시데이터
-        setData();
-
+        blue_vote = Integer.parseInt(matchData.gamescore.split("/")[1]);
+        setDataPie();
+        setDataBar();
     }
-    private void setData() {
+    private void setDataPie() {
         ArrayList entries = new ArrayList<>();
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
-        entries.add(new PieEntry(red_vote,matchData.team1_name +"\n\n"+ Integer.toString(red_vote)+"킬"));
-        entries.add(new PieEntry(blue_vote,matchData.team2_name +"\n\n"+ Integer.toString(blue_vote)+"킬"));
+        entries.add(new PieEntry(red_vote,matchData.team1_name));
+        entries.add(new PieEntry(blue_vote,matchData.team2_name));
         PieDataSet dataSet = new PieDataSet(entries, " Red Vs Blue");
         dataSet.setDrawIcons(false);
         dataSet.setSliceSpace(3f);
@@ -109,7 +167,7 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
         //dataSet.setSelectionShift(0f);
 
         PieData data = new PieData(dataSet);
-        data.setValueFormatter(new PercentFormatter());
+        data.setValueFormatter(new LargeValueFormatter());
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.WHITE);
         data.setValueTypeface(Typeface.DEFAULT);
@@ -119,6 +177,50 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
         vote_rate.highlightValues(null);
         vote_rate.invalidate();
     }//대충 pie 데이터 넣는 곳
+    public  void setDataBar(){
+        ArrayList<BarDataSet> teamRedPlayerBarData = new ArrayList<BarDataSet>();
+        ArrayList<BarDataSet> teamBluePlayerBarData = new ArrayList<BarDataSet>();
+        ArrayList<BarEntry> tmpRed = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> tmpBlue = new ArrayList<BarEntry>();
+        List<String> teamRedPlayerName =Arrays.asList(matchData.team1_playername.split("/"));
+        List<String> teamBluePlayerName = Arrays.asList(matchData.team2_playername.split("/"));
+        List<String> teamRedPlayScore = Arrays.asList(matchData.team1_playerscore.split("#"));
+        List<String> teamBluePlayScore = Arrays.asList(matchData.team2_playerscore.split("#"));
+
+        BarData dataRed = new BarData();
+        BarData dataBlue = new BarData();
+        for(int i = 0;i<5;i++){//선수
+            for(int j = 0;j<3;j++){//킬뎃어시
+                tmpRed.add(new BarEntry(i*4+j, Integer.parseInt(teamRedPlayScore.get(i).split("/")[j])));
+                tmpBlue.add(new BarEntry(i*4+j, Integer.parseInt(teamBluePlayScore.get(i).split("/")[j])));
+            }
+            teamRedPlayerBarData.add(new BarDataSet(tmpRed,teamRedPlayerName.get(i)));
+            teamBluePlayerBarData.add(new BarDataSet(tmpBlue,teamBluePlayerName.get(i)));
+            teamRedPlayerBarData.get(i).setColors(new int[] {getColor(0),getColor(1),getColor(2)});
+            teamBluePlayerBarData.get(i).setColors(new int[] {getColor(0),getColor(1),getColor(2)});
+            dataRed.addDataSet(teamRedPlayerBarData.get(i));
+            dataBlue.addDataSet(teamBluePlayerBarData.get(i));
+        }
+        dataRed.setValueTextSize(15f);
+        dataBlue.setValueTextSize(15f);
+        dataRed.setValueFormatter(new LargeValueFormatter());
+        dataBlue.setValueFormatter(new LargeValueFormatter());
+        dataRed.setValueTypeface(Typeface.DEFAULT);
+        dataBlue.setValueTypeface(Typeface.DEFAULT);
+
+        kill_Red.setData(dataRed);
+        kill_Red.invalidate();
+        kill_Blue.setData(dataBlue);
+        kill_Blue.invalidate();
+    }//대충 bar 데이터 넣는곳
+    public int getColor(int i){
+        switch (i){
+            case 0: return getResources().getColor(R.color.killRed);
+            case 1: return getResources().getColor(R.color.deathBrown);
+            case 2: return getResources().getColor(R.color.asistBlue);
+            default: return Color.rgb(255,255,255);
+        }
+    }
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -141,9 +243,51 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-
+        if(e instanceof PieEntry) {
+            Transition slide = new Slide(Gravity.BOTTOM);
+            Transition fade = new Fade();
+            slide.setDuration(600);
+            fade.setDuration(600);
+            PieEntry pe = (PieEntry) e;
+            String label = pe.getLabel();
+            String red = matchData.team1_name;
+            String blue = matchData.team2_name;
+            if (label.equals(red)) {
+                if (kill_Red.getVisibility() == View.VISIBLE) {
+                    fade.addTarget(kill_Red);
+                    TransitionManager.beginDelayedTransition(getView().findViewById(R.id.detail_teamRed_kill_chart),fade);
+                    kill_Red.setVisibility(View.GONE);
+                    fade.removeTarget(kill_Red);
+                }
+                else {
+                    slide.addTarget(kill_Red);
+                    TransitionManager.beginDelayedTransition(getView().findViewById(R.id.detail_teamRed_kill_chart),slide);
+                    kill_Red.setVisibility(View.VISIBLE);
+                    kill_Red.requestFocus();
+                    kill_Red.animateY(1500, Easing.EaseInOutQuad);
+                    slide.removeTarget(kill_Red);
+                }
+            }
+            else if (label.equals(blue)) {
+                if (kill_Blue.getVisibility() == View.VISIBLE) {
+                    fade.addTarget(kill_Blue);
+                    TransitionManager.beginDelayedTransition(getView().findViewById(R.id.detail_teamBlue_kill_chart),fade);
+                    kill_Blue.setVisibility(View.GONE);
+                    fade.removeTarget(kill_Blue);
+                }
+                else {
+                    slide.addTarget(kill_Blue);
+                    TransitionManager.beginDelayedTransition(getView().findViewById(R.id.detail_teamBlue_kill_chart),slide);
+                    kill_Blue.setVisibility(View.VISIBLE);
+                    kill_Blue.requestFocus();
+                    kill_Blue.animateY(1500, Easing.EaseInOutQuad);
+                    slide.removeTarget(kill_Blue);
+                }
+            }
+        }
     }
 
     @Override
