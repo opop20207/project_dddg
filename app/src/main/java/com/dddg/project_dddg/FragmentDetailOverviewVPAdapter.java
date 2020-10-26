@@ -52,8 +52,8 @@ public class FragmentDetailOverviewVPAdapter extends RecyclerView.Adapter<Fragme
        holder.player_name.setText(playerChampData.get(position).name);
        holder.pick_champ_name.setText(playerChampData.get(position).pick);
        holder.ban_champ_name.setText(playerChampData.get(position).ban);
-       Glide.with(holder.pick_champ_img).load(ChampImgUrl.getUrl(playerChampData.get(position).name));
-       Glide.with(holder.ban_champ_img).load(ChampImgUrl.getUrl(playerChampData.get(position).name));
+       Glide.with(holder.itemView).load(ChampImgUrl.getUrl(playerChampData.get(position).pick)).into(holder.pick_champ_img);
+       Glide.with(holder.itemView).load(ChampImgUrl.getUrl(playerChampData.get(position).ban)).into(holder.ban_champ_img);
        holder.itemView.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
