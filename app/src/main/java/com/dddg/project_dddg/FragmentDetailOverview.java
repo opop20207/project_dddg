@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.transition.Transition;
@@ -12,10 +13,13 @@ import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -25,7 +29,10 @@ import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.amar.library.ui.StickyScrollView;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -45,6 +52,8 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
+
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,6 +75,28 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
     BarChart kill_Blue;
     int red_vote,blue_vote;
     MatchData matchData;
+    ExpandableLayout redExpand;
+    ExpandableLayout blueExpand;
+    Button expandBoth;
+    StickyScrollView scrollView;
+    ArrayList<BarDataSet> teamRedPlayerBarData;
+    ArrayList<BarDataSet> teamBluePlayerBarData;
+    ArrayList<BarEntry> tmpRed;
+    ArrayList<BarEntry> tmpBlue;
+    List<String> teamRedPlayerName;
+    List<String> teamBluePlayerName;
+    List<String > teamRedPlayerPick;
+    List<String > teamRedPlayerBan;
+    List<String > teamBluePlayerPick;
+    List<String > teamBluePlayerBan;
+    List<String> teamRedPlayScore;
+    List<String> teamBluePlayScore;
+    RecyclerView recyclerViewRed;
+    RecyclerView recyclerViewBlue;
+    LinearLayoutManager linearLayoutManagerRed;
+    LinearLayoutManager linearLayoutManagerBlue;
+    FragmentDetailOverviewVPAdapter adapterRed;
+    FragmentDetailOverviewVPAdapter adapterBlue;
     @Nullable
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +108,17 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.match_detail_fragment_overview,container,false);
     }
+public class PlayerChampData{
+        String name;
+        String pick;
+        String ban;
+        public PlayerChampData(String name,String pick, String ban){
+            this.name = name;
+            this.pick = pick;
+            this.ban = ban;
+        }
 
+}
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -86,6 +127,33 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
         kill_Blue = getView().findViewById(R.id.detail_teamBlue_kill_chart);
         kill_Red.setVisibility(View.GONE);
         kill_Blue.setVisibility(View.GONE);
+        expandBoth = getView().findViewById(R.id.detail_teamBoth_expand);
+        redExpand = getView().findViewById(R.id.detail_teamRed_expand);
+        blueExpand = getView().findViewById(R.id.detail_teamBlue_expand);
+        scrollView = getActivity().findViewById(R.id.detail_scrollview);
+        expandBoth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!redExpand.isExpanded()&&!blueExpand.isExpanded()){
+                    redExpand.expand();
+                    blueExpand.expand();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.post(new Runnable(){
+                                public void run(){
+                                    scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                }
+                            });
+                        }
+                    },500);
+                }
+                else{
+                    redExpand.collapse();
+                    blueExpand.collapse();
+                }
+            }
+        });
         {
             vote_rate = getView().findViewById(R.id.detail_overview_pie);
             vote_rate.setUsePercentValues(false);
@@ -144,7 +212,51 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
         blue_vote = Integer.parseInt(matchData.gamescore.split("/")[1]);
         setDataPie();
         setDataBar();
+        setExpandAdapter();
     }
+    private void setExpandAdapter(){
+        ArrayList<FragmentDetailOverview.PlayerChampData> redPlayer =new ArrayList();
+        ArrayList<FragmentDetailOverview.PlayerChampData> bluePlayer=new ArrayList();
+        teamRedPlayerPick = Arrays.asList(matchData.team1_champ.split("/"));
+        teamBluePlayerPick = Arrays.asList(matchData.team2_champ.split("/"));
+        teamRedPlayerBan = Arrays.asList(matchData.team1_ban.split("/"));
+        teamBluePlayerBan = Arrays.asList(matchData.team2_ban.split("/"));
+        for(int i = 0;i<teamRedPlayerName.size();i++){
+          redPlayer.add(new PlayerChampData(teamRedPlayerName.get(i),teamRedPlayerPick.get(i),teamRedPlayerBan.get(i)));
+        }
+        for(int i = 0;i<teamBluePlayerName.size();i++){
+            bluePlayer.add(new PlayerChampData(teamBluePlayerName.get(i),teamBluePlayerPick.get(i),teamBluePlayerBan.get(i)));
+        }
+        recyclerViewRed = getView().findViewById(R.id.detail_teamred_player_recyclerview);
+        recyclerViewBlue = getView().findViewById(R.id.detail_teamblue_player_recyclerview);
+        linearLayoutManagerRed = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+        linearLayoutManagerBlue = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+        recyclerViewRed.setLayoutManager(linearLayoutManagerRed);
+        recyclerViewBlue.setLayoutManager(linearLayoutManagerBlue);
+        recyclerViewRed.setHasFixedSize(true);
+        recyclerViewBlue.setHasFixedSize(true);
+        adapterRed = new FragmentDetailOverviewVPAdapter(redPlayer);
+        adapterBlue = new FragmentDetailOverviewVPAdapter(bluePlayer);
+        adapterRed.setOnItemClickListener(new FragmentDetailOverviewVPAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick() {
+                if(redExpand.isExpanded()){
+                    redExpand.collapse();
+                }
+            }
+        });
+        adapterBlue.setOnItemClickListener(new FragmentDetailOverviewVPAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick() {
+                if(blueExpand.isExpanded()){
+                    blueExpand.collapse();
+                }
+            }
+        });
+        recyclerViewRed.setAdapter(adapterRed);
+        recyclerViewBlue.setAdapter(adapterBlue);
+
+    } //recyclerview
     private void setDataPie() {
         ArrayList entries = new ArrayList<>();
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
@@ -178,14 +290,14 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
         vote_rate.invalidate();
     }//대충 pie 데이터 넣는 곳
     public  void setDataBar(){
-        ArrayList<BarDataSet> teamRedPlayerBarData = new ArrayList<BarDataSet>();
-        ArrayList<BarDataSet> teamBluePlayerBarData = new ArrayList<BarDataSet>();
-        ArrayList<BarEntry> tmpRed = new ArrayList<BarEntry>();
-        ArrayList<BarEntry> tmpBlue = new ArrayList<BarEntry>();
-        List<String> teamRedPlayerName =Arrays.asList(matchData.team1_playername.split("/"));
-        List<String> teamBluePlayerName = Arrays.asList(matchData.team2_playername.split("/"));
-        List<String> teamRedPlayScore = Arrays.asList(matchData.team1_playerscore.split("#"));
-        List<String> teamBluePlayScore = Arrays.asList(matchData.team2_playerscore.split("#"));
+        teamRedPlayerBarData = new ArrayList<BarDataSet>();
+        teamBluePlayerBarData = new ArrayList<BarDataSet>();
+        tmpRed = new ArrayList<BarEntry>();
+        tmpBlue = new ArrayList<BarEntry>();
+        teamRedPlayerName =Arrays.asList(matchData.team1_playername.split("/"));
+        teamBluePlayerName = Arrays.asList(matchData.team2_playername.split("/"));
+        teamRedPlayScore = Arrays.asList(matchData.team1_playerscore.split("#"));
+        teamBluePlayScore = Arrays.asList(matchData.team2_playerscore.split("#"));
 
         BarData dataRed = new BarData();
         BarData dataBlue = new BarData();

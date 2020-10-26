@@ -53,6 +53,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.amar.library.ui.StickyScrollView
+        android:id="@+id/detail_scrollview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
