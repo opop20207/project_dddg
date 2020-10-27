@@ -3,10 +3,13 @@ package com.dddg.project_dddg;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,15 +35,17 @@ public class FragmentHome extends Fragment {
     MatchRVAdapter adapter;
     ArrayList<MatchData> matchData = new ArrayList<MatchData>(Arrays.asList(new MatchData()));
     static FragmentHome instance;
+
     private FragmentHome() {
     }
 
-    public static FragmentHome getInstance(){
-        if(instance==null){
+    public static FragmentHome getInstance() {
+        if (instance == null) {
             instance = new FragmentHome();
         }
         return instance;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,17 +54,31 @@ public class FragmentHome extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home,container,false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.RadioGroup);
+
+        for(int i=0; i<30;i++) {
+            RadioButton rdbtn = new RadioButton(getContext());
+            rdbtn.setId(i);
+            rdbtn.setWidth(200);
+            rdbtn.setHeight(200);
+            rdbtn.setText("28");
+            rdbtn.setGravity(Gravity.CENTER);
+            rdbtn.setBackground(getResources().getDrawable(R.drawable.radiobutton));
+            rdbtn.setButtonDrawable(getResources().getDrawable(R.color.fui_transparent));
+            radioGroup.addView(rdbtn);
+        }
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recyclerView = getView().findViewById(R.id.home_recyclerview);
-        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
+        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new MatchRVAdapter(matchData);
-        adapter.setOnItemClickListener(new MatchRVAdapter.OnItemClickListener(){
+        adapter.setOnItemClickListener(new MatchRVAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent detailintent = new Intent(getActivity(), MatchDetailInfo.class);
@@ -73,8 +92,8 @@ public class FragmentHome extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 matchData.clear();
-                for(DataSnapshot snap: snapshot.getChildren()){
-                    HashMap<String,String> matchDataHash = (HashMap<String, String>) snap.getValue();
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    HashMap<String, String> matchDataHash = (HashMap<String, String>) snap.getValue();
                     MatchData match = new MatchData(
                             matchDataHash.get("date").toString(),
                             matchDataHash.get("title").toString(),
@@ -94,11 +113,12 @@ public class FragmentHome extends Fragment {
                             matchDataHash.get("team2_champ").toString(),
                             matchDataHash.get("team1_ban").toString(),
                             matchDataHash.get("team2_ban").toString()
-                            );
+                    );
                     matchData.add(match);
                 }
                 adapter.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
