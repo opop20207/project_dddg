@@ -221,11 +221,18 @@ public class PlayerChampData{
         teamBluePlayerPick = Arrays.asList(matchData.team2_champ.split("/"));
         teamRedPlayerBan = Arrays.asList(matchData.team1_ban.split("/"));
         teamBluePlayerBan = Arrays.asList(matchData.team2_ban.split("/"));
+        String banPick;
+        Log.d("로그",Integer.toString(teamRedPlayerBan.size()));
         for(int i = 0;i<teamRedPlayerName.size();i++){
-          redPlayer.add(new PlayerChampData(teamRedPlayerName.get(i),teamRedPlayerPick.get(i),teamRedPlayerBan.get(i)));
+            if(i>=teamRedPlayerBan.size()) banPick = "";
+            else banPick = teamRedPlayerBan.get(i);
+          redPlayer.add(new PlayerChampData(teamRedPlayerName.get(i),teamRedPlayerPick.get(i),banPick));
+
         }
         for(int i = 0;i<teamBluePlayerName.size();i++){
-            bluePlayer.add(new PlayerChampData(teamBluePlayerName.get(i),teamBluePlayerPick.get(i),teamBluePlayerBan.get(i)));
+            if(i>=teamBluePlayerBan.size()) banPick = "";
+            else banPick = teamBluePlayerBan.get(i);
+            bluePlayer.add(new PlayerChampData(teamBluePlayerName.get(i),teamBluePlayerPick.get(i),banPick));
         }
         recyclerViewRed = getView().findViewById(R.id.detail_teamred_player_recyclerview);
         recyclerViewBlue = getView().findViewById(R.id.detail_teamblue_player_recyclerview);

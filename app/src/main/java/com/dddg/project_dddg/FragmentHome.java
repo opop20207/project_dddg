@@ -156,7 +156,7 @@ public class FragmentHome extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Intent detailintent = new Intent(getActivity(), MatchDetailInfo.class);
-                detailintent.putExtra("matchdata", matchData.get(position));
+                detailintent.putExtra("matchdata", matchDataOrdered.get(position));
                 startActivity(detailintent);
                 // 클릭되었을때
             }

@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -28,11 +30,15 @@ public class MatchDetailInfo extends AppCompatActivity {
     ImageButton backward_btn;
     TextView teamRedName;
     TextView teamBlueName;
+    TextView title;
+    TextView score;
     // 몇개 더 필요
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.match_detail_frame);
+        title = findViewById(R.id.detail_match_title);
+        score = findViewById(R.id.detail_teamScore);
         teamRed = findViewById(R.id.detail_teamRed_ImgBtn);
         teamBlue = findViewById(R.id.detail_teamBlue_ImgBtn);
         matchData = (MatchData) this.getIntent().getSerializableExtra("matchdata");
@@ -40,6 +46,8 @@ public class MatchDetailInfo extends AppCompatActivity {
         Glide.with(this).load(TeamImgUrl.Url(matchData.team2_name)).fitCenter().into(teamBlue);
         teamRedName = findViewById(R.id.detail_teamRed_name);
         teamBlueName = findViewById(R.id.detail_teamBlue_name);
+        title.setText(matchData.title+" "+matchData.stage);
+        score.setText(matchData.gamescore.split("/")[0]+" - "+matchData.gamescore.split("/")[1]);
         teamRedName.setText(matchData.team1_name);
         teamBlueName.setText(matchData.team2_name);
         ViewPager2 viewPager = findViewById(R.id.detail_viewpager);
