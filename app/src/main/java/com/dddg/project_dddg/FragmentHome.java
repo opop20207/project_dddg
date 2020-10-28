@@ -1,5 +1,6 @@
 package com.dddg.project_dddg;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,7 +90,8 @@ public class FragmentHome extends Fragment {
             SimpleDateFormat simpleDateToday= new SimpleDateFormat("오늘\ndd");
             SimpleDateFormat simpleDateforSort = new SimpleDateFormat("MMdd");
             Date today = new Date();
-            int range_date = 30;
+            int range_date = 14;
+            int widthofRadio =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,75,getResources().getDisplayMetrics());
             //radiobutton 날짜 범위 30 -> 30일 전부터 30일 후까지
             for(int i=(-1*range_date); i<=range_date;i++) {
                 RadioButton rdbtn = new RadioButton(getContext());
@@ -108,7 +111,7 @@ public class FragmentHome extends Fragment {
                     rdbtn.setText(dDate);
                     rdbtn.setTextColor(Color.WHITE);
                 }
-                rdbtn.setLayoutParams(new LinearLayout.LayoutParams(75, ViewGroup.LayoutParams.MATCH_PARENT,1));
+                rdbtn.setLayoutParams(new LinearLayout.LayoutParams(widthofRadio, ViewGroup.LayoutParams.MATCH_PARENT,1));
                 rdbtn.setTextSize(15);
                 rdbtn.setGravity(Gravity.CENTER);
                 rdbtn.setBackground(getResources().getDrawable(R.drawable.radiobutton));
