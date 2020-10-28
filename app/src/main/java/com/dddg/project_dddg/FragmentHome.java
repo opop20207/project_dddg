@@ -2,11 +2,14 @@ package com.dddg.project_dddg;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -81,13 +84,30 @@ public class FragmentHome extends Fragment {
             cal.add(Calendar.DATE, i);
             String dDate = simpleDate.format(cal.getTime());
             if(i == 0) rdbtn.setChecked(true);
-            rdbtn.setId(i);
-            rdbtn.setText(dDate);
-            rdbtn.setLayoutParams(new RadioGroup.LayoutParams(150, 150, 1));
-            rdbtn.setTextSize(20);
+           rdbtn.setId(i+14);
+            if(i == 0)rdbtn.setText(dDate+"\nTODAY");
+            else rdbtn.setText(dDate);
+            rdbtn.setTextColor(Color.WHITE);
+            rdbtn.setLayoutParams(new LinearLayout.LayoutParams(75, ViewGroup.LayoutParams.MATCH_PARENT,1));
+            rdbtn.setTextSize(15);
             rdbtn.setGravity(Gravity.CENTER);
             rdbtn.setBackground(getResources().getDrawable(R.drawable.radiobutton));
             rdbtn.setButtonDrawable(getResources().getDrawable(R.color.fui_transparent));
+            rdbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) {
+                        buttonView.setTextColor(getResources().getColor(R.color.subDarkBlue));
+                        buttonView.setChecked(true);
+                    }
+                    else {
+                        buttonView.setTextColor(Color.WHITE);
+                        buttonView.setChecked(false);
+                    }
+                    if(isChecked) Log.d("로그",buttonView.getText()+"클릭됨");
+                    else Log.d("로그",buttonView.getText()+"클릭헤제됨");
+                }
+            });
             radioGroup.addView(rdbtn);
         }
         return view;
