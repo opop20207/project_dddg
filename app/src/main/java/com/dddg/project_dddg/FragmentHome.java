@@ -7,9 +7,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,9 +27,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class FragmentHome extends Fragment {
     DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference("match");
@@ -56,13 +65,26 @@ public class FragmentHome extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.RadioGroup);
-
-        for(int i=0; i<30;i++) {
+        SimpleDateFormat simpleDate = new SimpleDateFormat("dd");
+        Date today = new Date();
+        String date = simpleDate.format(today);
+        for(int i=-14; i<=14;i++) {
             RadioButton rdbtn = new RadioButton(getContext());
+            Date mDate = null;
+            try {
+                mDate = simpleDate.parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar cal = new GregorianCalendar(Locale.KOREA);
+            cal.setTime(mDate);
+            cal.add(Calendar.DATE, i);
+            String dDate = simpleDate.format(cal.getTime());
+            if(i == 0) rdbtn.setChecked(true);
             rdbtn.setId(i);
-            rdbtn.setWidth(200);
-            rdbtn.setHeight(200);
-            rdbtn.setText("28");
+            rdbtn.setText(dDate);
+            rdbtn.setLayoutParams(new RadioGroup.LayoutParams(150, 150, 1));
+            rdbtn.setTextSize(20);
             rdbtn.setGravity(Gravity.CENTER);
             rdbtn.setBackground(getResources().getDrawable(R.drawable.radiobutton));
             rdbtn.setButtonDrawable(getResources().getDrawable(R.color.fui_transparent));
