@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.dddg.project_dddg.FragmentFrame;
@@ -22,6 +23,8 @@ public class FirebaseUiActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_firebase_ui);
 
         signin();
@@ -62,11 +65,11 @@ public class FirebaseUiActivity extends AppCompatActivity {
     }
 
     private int getSelectedTheme(){
-        return AuthUI.getDefaultTheme();
+        return R.style.AppTheme;
     } //로그인 화면 별 테마 구성
 
     private int getSelectedLogo(){
-        return R.mipmap.ic_launcher;
+        return R.drawable.riot_image;
     }// 로그인 화면 별 로고 구성
 
     private List<AuthUI.IdpConfig> getSelectedProviders(){//로그인 버튼 추가

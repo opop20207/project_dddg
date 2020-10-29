@@ -1,0 +1,288 @@
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleJvm\" value=\"1.8\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision 56604cac5e809d12e72c73a3e9d84acb19da9271)
++++ .idea/gradle.xml	(date 1603900208175)
+@@ -15,6 +15,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: app/src/main/res/layout/activity_auth.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".auth.AuthActivity\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/title\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"프로젝트 두둥등장\"\r\n        android:textStyle=\"bold\"\r\n        android:textSize=\"50dp\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintRight_toRightOf=\"parent\"\r\n        app:layout_constraintLeft_toLeftOf=\"parent\"\r\n        app:layout_constraintBottom_toTopOf=\"@id/dd\"/>\r\n\r\n    <ImageView\r\n        android:id=\"@+id/dd\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@drawable/dd\"\r\n        app:layout_constraintRight_toRightOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/title\"\r\n        app:layout_constraintLeft_toLeftOf=\"parent\"\r\n        app:layout_constraintBottom_toTopOf=\"@id/dg\"/>\r\n\r\n    <ImageView\r\n        android:id=\"@+id/dg\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@drawable/dg\"\r\n        app:layout_constraintLeft_toLeftOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/dd\"\r\n        app:layout_constraintRight_toRightOf=\"parent\"\r\n        app:layout_constraintBottom_toTopOf=\"@id/loginbtn\"/>\r\n\r\n\r\n    <Button\r\n        android:id=\"@+id/loginbtn\"\r\n        android:layout_width=\"109dp\"\r\n        android:layout_height=\"115dp\"\r\n        android:background=\"@drawable/riot_image\"\r\n        android:text=\"로그인 하기\"\r\n        android:textColor=\"@color/common_google_signin_btn_text_light\"\r\n        android:textSize=\"20dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintLeft_toLeftOf=\"parent\"\r\n        app:layout_constraintRight_toRightOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/dg\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_auth.xml	(revision 56604cac5e809d12e72c73a3e9d84acb19da9271)
++++ app/src/main/res/layout/activity_auth.xml	(date 1603904244627)
+@@ -1,55 +1,30 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<com.skyfishjy.library.RippleBackground
++    xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".auth.AuthActivity">
++    android:id="@+id/content"
++    app:rb_color="#0099CC"
++    app:rb_radius="32dp"
++    app:rb_rippleAmount="4"
++    app:rb_duration="3000"
++    app:rb_scale="6">
+ 
+     <TextView
+         android:id="@+id/title"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_centerHorizontal="true"
+         android:text="프로젝트 두둥등장"
+-        android:textStyle="bold"
+         android:textSize="50dp"
+-        app:layout_constraintTop_toTopOf="parent"
+-        app:layout_constraintRight_toRightOf="parent"
+-        app:layout_constraintLeft_toLeftOf="parent"
+-        app:layout_constraintBottom_toTopOf="@id/dd"/>
++        android:textStyle="bold" />
+ 
+     <ImageView
+-        android:id="@+id/dd"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:background="@drawable/dd"
+-        app:layout_constraintRight_toRightOf="parent"
+-        app:layout_constraintTop_toBottomOf="@id/title"
+-        app:layout_constraintLeft_toLeftOf="parent"
+-        app:layout_constraintBottom_toTopOf="@id/dg"/>
+-
+-    <ImageView
+-        android:id="@+id/dg"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:background="@drawable/dg"
+-        app:layout_constraintLeft_toLeftOf="parent"
+-        app:layout_constraintTop_toBottomOf="@id/dd"
+-        app:layout_constraintRight_toRightOf="parent"
+-        app:layout_constraintBottom_toTopOf="@id/loginbtn"/>
+-
+-
+-    <Button
++        android:layout_width="64dp"
++        android:layout_height="64dp"
+         android:id="@+id/loginbtn"
+-        android:layout_width="109dp"
+-        android:layout_height="115dp"
+-        android:background="@drawable/riot_image"
+-        android:text="로그인 하기"
+-        android:textColor="@color/common_google_signin_btn_text_light"
+-        android:textSize="20dp"
+-        app:layout_constraintBottom_toBottomOf="parent"
+-        app:layout_constraintLeft_toLeftOf="parent"
+-        app:layout_constraintRight_toRightOf="parent"
+-        app:layout_constraintTop_toBottomOf="@id/dg" />
+-
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
++        android:layout_centerVertical="true"
++        android:layout_centerHorizontal="true"
++        android:src="@drawable/riot_image"/>
++</com.skyfishjy.library.RippleBackground>
+\ No newline at end of file
+Index: app/src/main/java/com/dddg/project_dddg/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.dddg.project_dddg;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\n\r\nimport com.dddg.project_dddg.auth.AuthActivity;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_main);\r\n        Intent framemain = new Intent(this, FragmentFrame.class);\r\n        startActivity(framemain);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/dddg/project_dddg/MainActivity.java	(revision 56604cac5e809d12e72c73a3e9d84acb19da9271)
++++ app/src/main/java/com/dddg/project_dddg/MainActivity.java	(date 1603904065195)
+@@ -13,7 +13,7 @@
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_main);
+-        Intent framemain = new Intent(this, FragmentFrame.class);
++        Intent framemain = new Intent(this, AuthActivity.class);
+         startActivity(framemain);
+     }
+ }
+\ No newline at end of file
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\napply plugin: 'com.google.gms.google-services'\r\n\r\nandroid {\r\n    compileSdkVersion 29\r\n    buildToolsVersion \"29.0.3\"\r\n    android.defaultConfig.vectorDrawables.useSupportLibrary = true\r\n    defaultConfig {\r\n        applicationId \"com.dddg.project_dddg\"\r\n        minSdkVersion 16\r\n        targetSdkVersion 29\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n        multiDexEnabled true\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n\r\n}\r\n\r\ndependencies {\r\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\r\n    implementation 'androidx.appcompat:appcompat:1.1.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'\r\n    implementation 'com.google.android.material:material:1.2.1'\r\n    testImplementation 'junit:junit:4.12'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.1'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'\r\n    implementation 'com.google.android.material:material:1.2.1'\r\n    implementation 'org.jsoup:jsoup:1.11.3'\r\n    implementation 'com.github.bumptech.glide:glide:4.9.0'\r\n    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'\r\n    implementation platform('com.google.firebase:firebase-bom:25.12.0')\r\n    implementation 'com.google.firebase:firebase-analytics'\r\n    implementation 'com.google.firebase:firebase-database'\r\n    implementation 'com.google.firebase:firebase-auth:19.3.1'\r\n    implementation 'com.firebaseui:firebase-ui-auth:4.3.2'\r\n    implementation 'com.google.android.gms:play-services-auth:18.0.0'\r\n    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'\r\n    implementation 'com.android.support:multidex:1.0.3'\r\n    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'\r\n    implementation 'com.github.amarjain07:StickyScrollView:1.0.2'\r\n    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 56604cac5e809d12e72c73a3e9d84acb19da9271)
++++ app/build.gradle	(date 1603900373838)
+@@ -52,4 +52,5 @@
+     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+     implementation 'com.github.amarjain07:StickyScrollView:1.0.2'
+     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
++    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/dddg/project_dddg/auth/FirebaseUiActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.dddg.project_dddg.auth;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.widget.Toast;\r\n\r\nimport com.dddg.project_dddg.FragmentFrame;\r\nimport com.dddg.project_dddg.MainActivity;\r\nimport com.dddg.project_dddg.R;\r\nimport com.firebase.ui.auth.AuthUI;\r\nimport com.firebase.ui.auth.IdpResponse;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class FirebaseUiActivity extends AppCompatActivity {\r\n\r\n    private static final int RC_SIGN_IN = 1000;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_firebase_ui);\r\n\r\n        signin();\r\n    }\r\n\r\n    @Override\r\n    protected void onActivityResult(int requestCode, int resultCode, Intent data){\r\n        super.onActivityResult(requestCode, resultCode, data);\r\n        if(requestCode == RC_SIGN_IN){\r\n            IdpResponse response = IdpResponse.fromResultIntent(data);\r\n\r\n            if(resultCode == RESULT_OK){//로그인 성공시 맵 화면으로 넘어감\r\n                Intent i = new Intent(this, FragmentFrame.class);\r\n                Toast.makeText(this,\"로그인 성공\",Toast.LENGTH_SHORT).show();\r\n                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);\r\n                startActivity(i);\r\n                finish();\r\n            }\r\n            else{// 실패시 다시 첫 화면으로 돌아감\r\n                Intent i = new Intent(this, AuthActivity.class);\r\n                Toast.makeText(this,\"로그인 실패\\n다시 로그인 해주세요\",Toast.LENGTH_SHORT).show();\r\n                startActivity(i);\r\n                finish();\r\n            }\r\n        }\r\n    }\r\n\r\n    private void signin(){//로그인 창 화면\r\n        startActivityForResult(\r\n                AuthUI.getInstance().createSignInIntentBuilder()\r\n                        .setTheme(getSelectedTheme())\r\n                        .setLogo(getSelectedLogo())\r\n                        .setAvailableProviders(getSelectedProviders())\r\n                        .setTosAndPrivacyPolicyUrls(\"\", \"\")\r\n                        .setIsSmartLockEnabled(true)\r\n                        .build(),RC_SIGN_IN\r\n        );\r\n    }\r\n\r\n    private int getSelectedTheme(){\r\n        return AuthUI.getDefaultTheme();\r\n    } //로그인 화면 별 테마 구성\r\n\r\n    private int getSelectedLogo(){\r\n        return R.mipmap.ic_launcher;\r\n    }// 로그인 화면 별 로고 구성\r\n\r\n    private List<AuthUI.IdpConfig> getSelectedProviders(){//로그인 버튼 추가\r\n        List<AuthUI.IdpConfig> selectedProviders = new ArrayList<>();\r\n        selectedProviders.add(new AuthUI.IdpConfig.GoogleBuilder().build());\r\n        //selectedProviders.add(new AuthUI.IdpConfig.FacebookBuilder().build());\r\n        selectedProviders.add(new AuthUI.IdpConfig.EmailBuilder().build());\r\n        return selectedProviders;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/dddg/project_dddg/auth/FirebaseUiActivity.java	(revision 56604cac5e809d12e72c73a3e9d84acb19da9271)
++++ app/src/main/java/com/dddg/project_dddg/auth/FirebaseUiActivity.java	(date 1603905309342)
+@@ -4,6 +4,7 @@
+ 
+ import android.content.Intent;
+ import android.os.Bundle;
++import android.view.WindowManager;
+ import android.widget.Toast;
+ 
+ import com.dddg.project_dddg.FragmentFrame;
+@@ -22,6 +23,8 @@
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
++        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
++                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+         setContentView(R.layout.activity_firebase_ui);
+ 
+         signin();
+@@ -62,11 +65,11 @@
+     }
+ 
+     private int getSelectedTheme(){
+-        return AuthUI.getDefaultTheme();
++        return R.style.AppTheme;
+     } //로그인 화면 별 테마 구성
+ 
+     private int getSelectedLogo(){
+-        return R.mipmap.ic_launcher;
++        return R.drawable.riot_image;
+     }// 로그인 화면 별 로고 구성
+ 
+     private List<AuthUI.IdpConfig> getSelectedProviders(){//로그인 버튼 추가
+Index: app/src/main/java/com/dddg/project_dddg/auth/AuthActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.dddg.project_dddg.auth;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\n\r\nimport com.dddg.project_dddg.R;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.auth.FirebaseUser;\r\n\r\npublic class AuthActivity extends AppCompatActivity implements View.OnClickListener{\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_auth);\r\n\r\n        Button loginbtn = (Button)findViewById(R.id.loginbtn);\r\n        loginbtn.setOnClickListener(this);\r\n        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();\r\n\r\n\r\n    }\r\n\r\n    @Override\r\n    public void onClick(View view){\r\n        switch(view.getId()){\r\n            case R.id.loginbtn:\r\n                Intent i = new Intent(this, FirebaseUiActivity.class);\r\n                startActivity(i);\r\n                finish();\r\n                break;\r\n            default:\r\n                break;\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/dddg/project_dddg/auth/AuthActivity.java	(revision 56604cac5e809d12e72c73a3e9d84acb19da9271)
++++ app/src/main/java/com/dddg/project_dddg/auth/AuthActivity.java	(date 1603904449909)
+@@ -6,10 +6,14 @@
+ import android.os.Bundle;
+ import android.view.View;
+ import android.widget.Button;
++import android.widget.ImageView;
+ 
+ import com.dddg.project_dddg.R;
+ import com.google.firebase.auth.FirebaseAuth;
+ import com.google.firebase.auth.FirebaseUser;
++import com.skyfishjy.library.RippleBackground;
++
++import static java.lang.Thread.sleep;
+ 
+ public class AuthActivity extends AppCompatActivity implements View.OnClickListener{
+ 
+@@ -18,7 +22,7 @@
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_auth);
+ 
+-        Button loginbtn = (Button)findViewById(R.id.loginbtn);
++        ImageView loginbtn = (ImageView) findViewById(R.id.loginbtn);
+         loginbtn.setOnClickListener(this);
+         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+ 
+@@ -29,6 +33,11 @@
+     public void onClick(View view){
+         switch(view.getId()){
+             case R.id.loginbtn:
++                final RippleBackground rippleBackground=(RippleBackground)findViewById(R.id.content);
++                rippleBackground.startRippleAnimation();
++                for(int i=0;i<2000000000;i++){
++
++                }
+                 Intent i = new Intent(this, FirebaseUiActivity.class);
+                 startActivity(i);
+                 finish();
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(date 1603900208157)
++++ .idea/compiler.xml	(date 1603900208157)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\nbuildscript {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n        maven { url 'https://jitpack.io' }\r\n    }\r\n    dependencies {\r\n        classpath 'com.android.tools.build:gradle:4.0.2'\r\n        classpath 'com.google.gms:google-services:4.3.4'\r\n        // NOTE: Do not place your application dependencies here; they belong\r\n        // in the individual module build.gradle files\r\n    }\r\n}\r\n\r\nallprojects {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n        maven { url 'https://jitpack.io' }\r\n    }\r\n}\r\n\r\ntask clean(type: Delete) {\r\n    delete rootProject.buildDir\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision 56604cac5e809d12e72c73a3e9d84acb19da9271)
++++ build.gradle	(date 1603900259031)
+@@ -6,7 +6,7 @@
+         maven { url 'https://jitpack.io' }
+     }
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:4.0.2'
++        classpath 'com.android.tools.build:gradle:4.1.0'
+         classpath 'com.google.gms:google-services:4.3.4'
+         // NOTE: Do not place your application dependencies here; they belong
+         // in the individual module build.gradle files
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision 56604cac5e809d12e72c73a3e9d84acb19da9271)
++++ .idea/misc.xml	(date 1603900208147)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Sun Oct 04 15:53:11 KST 2020\r\ndistributionBase=GRADLE_USER_HOME\r\ndistributionPath=wrapper/dists\r\nzipStoreBase=GRADLE_USER_HOME\r\nzipStorePath=wrapper/dists\r\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-6.1.1-all.zip\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>x-windows-949
+===================================================================
+--- gradle/wrapper/gradle-wrapper.properties	(revision 56604cac5e809d12e72c73a3e9d84acb19da9271)
++++ gradle/wrapper/gradle-wrapper.properties	(date 1603900259035)
+@@ -1,6 +1,6 @@
+-#Sun Oct 04 15:53:11 KST 2020
++#Thu Oct 29 00:50:59 KST 2020
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-6.1.1-all.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-6.5-bin.zip
