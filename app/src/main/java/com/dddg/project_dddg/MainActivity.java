@@ -16,5 +16,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Intent framemain = new Intent(this, AuthActivity.class);
         startActivity(framemain);
+        finish();
     }
 }
