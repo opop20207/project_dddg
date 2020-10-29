@@ -44,4 +44,8 @@ public class MatchData implements Serializable {
         this.team1_ban = team1_ban;
         this.team2_ban = team2_ban;
     }
+    public String getKey(){
+        return title+stage+winteam;
+
+    }
 }

@@ -19,8 +19,10 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +35,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amar.library.ui.StickyScrollView;
+import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -70,6 +73,8 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
         }
         return instance;
     }
+    TextView winTeam;
+    ImageView winTeamImg;
     PieChart vote_rate;
     BarChart kill_Red;
     BarChart kill_Blue;
@@ -123,6 +128,13 @@ public class PlayerChampData{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         matchData = (MatchData) getActivity().getIntent().getSerializableExtra("matchdata");
+        winTeam = getView().findViewById(R.id.detail_win_team_name);
+        winTeamImg = getView().findViewById(R.id.detail_win_team_img);
+        String winTeamString;
+        if(Integer.parseInt(matchData.winteam)>1) winTeamString = matchData.team2_name;
+        else winTeamString = matchData.team1_name;
+        winTeam.setText(winTeamString);
+        Glide.with(getView()).load(TeamImgUrl.Url(winTeamString)).into(winTeamImg);
         kill_Red = getView().findViewById(R.id.detail_teamRed_kill_chart);
         kill_Blue = getView().findViewById(R.id.detail_teamBlue_kill_chart);
         kill_Red.setVisibility(View.GONE);

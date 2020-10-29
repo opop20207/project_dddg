@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/detail_comment_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
@@ -150,4 +150,57 @@
         </LinearLayout>
     </com.amar.library.ui.StickyScrollView>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detail_comment_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:animateLayoutChanges="true">
+
+        <Button
+            android:id="@+id/detail_comment_upload_btn"
+            android:layout_width="75dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="1dp"
+            android:background="@color/subDarkBlue"
+            android:text="등록"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/materialTextField2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/subDarkBlue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/detail_comment_upload_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:mtf_backgroundColor="#FFFFFF"
+            app:mtf_image="@drawable/ic_comment_24"
+            app:mtf_labelColor="#FFFFFF"
+            app:mtf_openKeyboardOnFocus="false"
+            app:mtf_cardCollapsedHeight="1dp">
+
+            <EditText
+                android:id="@+id/detail_comment_upload_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
+                android:background="@color/subDarkBlue"
+                android:gravity="center_vertical"
+                android:hint="댓글 작성"
+                android:inputType="textShortMessage|text"
+                android:maxLines="1"
+                android:textColor="@color/subDarkBlue"
+                android:textSize="24sp" />
+
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
