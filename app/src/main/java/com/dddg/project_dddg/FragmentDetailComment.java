@@ -81,7 +81,7 @@ public class FragmentDetailComment extends Fragment {
         commentText = getActivity().findViewById(R.id.detail_comment_upload_edittext);
         commentBtn = getActivity().findViewById(R.id.detail_comment_upload_btn);
         linearLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(false);
         commentRVAdapter = new CommentRVAdapter(commentList);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(commentRVAdapter);

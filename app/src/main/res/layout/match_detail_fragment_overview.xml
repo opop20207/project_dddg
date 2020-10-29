@@ -6,184 +6,203 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="30dp"
-        android:background="@color/subDarkBlue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <ImageView
-            android:id="@+id/detail_win_team_img"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.25"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/detail_win_team_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="win_team_name"
-            android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="@+id/detail_win_team_img"
-            app:layout_constraintStart_toStartOf="@+id/detail_win_team_img"
-            app:layout_constraintTop_toBottomOf="@+id/detail_win_team_img" />
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WINNER"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/detail_win_team_img"
-            app:layout_constraintStart_toStartOf="@+id/detail_win_team_img"
-            app:layout_constraintTop_toBottomOf="@+id/detail_win_team_name"
-            app:layout_constraintVertical_bias="0.39" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-        app:layout_constraintVertical_bias="0.0">
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/detail_overview_pie"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
-
-            <TextView
-                android:id="@+id/tvXMax"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/seekBar1"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="15dp"
-                android:gravity="right"
-                android:text="Kill Rate"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-        </com.github.mikephil.charting.charts.PieChart>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/detail_teamRed_kill_chart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="2dp"
-        android:focusable="auto"
-        android:focusableInTouchMode="true"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
-
-    </com.github.mikephil.charting.charts.BarChart>
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/detail_teamBlue_kill_chart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:focusable="auto"
-        android:focusableInTouchMode="true"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_teamRed_kill_chart" >
-
-    </com.github.mikephil.charting.charts.BarChart>
-
-    <Button
-        android:id="@+id/detail_teamBoth_expand"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="@color/subDarkBlue"
-        android:text="추가 정보"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_teamBlue_kill_chart" />
-
-    <net.cachapa.expandablelayout.ExpandableLayout
-        android:id="@+id/detail_teamRed_expand"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/subRed"
-        app:el_duration="500"
-        app:el_expanded="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_teamBoth_expand">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/detail_teamred_player_recyclerview"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content">
 
-    </net.cachapa.expandablelayout.ExpandableLayout>
+                <Button
+                    android:id="@+id/detail_teamBoth_expand"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:background="@color/subDarkBlue"
+                    android:text="추가 정보"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_teamBlue_kill_chart" />
 
-    <net.cachapa.expandablelayout.ExpandableLayout
-        android:id="@+id/detail_teamBlue_expand"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/subDarkBlue"
-        app:el_duration="500"
-        app:el_expanded="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_teamRed_expand">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/detail_overview_pie"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0">
+
+                        <TextView
+                            android:id="@+id/tvXMax"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/seekBar1"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="15dp"
+                            android:gravity="right"
+                            android:text="Kill Rate"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    </com.github.mikephil.charting.charts.PieChart>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/detail_teamblue_player_recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@color/subDarkBlue"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-    </net.cachapa.expandablelayout.ExpandableLayout>
+                    <ImageView
+                        android:id="@+id/detail_win_team_img"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.25"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/detail_win_team_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="win_team_name"
+                        android:textColor="#FFFFFF"
+                        app:layout_constraintEnd_toEndOf="@+id/detail_win_team_img"
+                        app:layout_constraintStart_toStartOf="@+id/detail_win_team_img"
+                        app:layout_constraintTop_toBottomOf="@+id/detail_win_team_img" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="WINNER"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/detail_win_team_img"
+                        app:layout_constraintStart_toStartOf="@+id/detail_win_team_img"
+                        app:layout_constraintTop_toBottomOf="@+id/detail_win_team_name"
+                        app:layout_constraintVertical_bias="0.39" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/detail_teamBlue_kill_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:focusable="auto"
+                    android:focusableInTouchMode="true"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_teamRed_kill_chart">
+
+                </com.github.mikephil.charting.charts.BarChart>
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/detail_teamRed_kill_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="2dp"
+                    android:focusable="auto"
+                    android:focusableInTouchMode="true"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+
+                </com.github.mikephil.charting.charts.BarChart>
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/detail_teamRed_expand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/subRed"
+                    app:el_duration="500"
+                    app:el_expanded="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_teamBoth_expand">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/detail_teamred_player_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/detail_teamBlue_expand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/subDarkBlue"
+                    app:el_duration="500"
+                    app:el_expanded="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_teamRed_expand">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/detail_teamblue_player_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

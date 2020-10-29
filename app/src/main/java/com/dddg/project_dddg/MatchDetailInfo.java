@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -23,6 +24,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.amar.library.ui.StickyScrollView;
 import com.bumptech.glide.Glide;
 import com.github.florent37.materialtextfield.MaterialTextField;
 import com.google.android.material.tabs.TabLayout;
@@ -45,13 +47,14 @@ public class MatchDetailInfo extends AppCompatActivity {
     TextView title;
     TextView score;
     ConstraintLayout constraintLayout;
+    StickyScrollView stickyScrollView;
     // 몇개 더 필요
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.match_detail_frame);
-
+        stickyScrollView = findViewById(R.id.detail_scrollview);
         title = findViewById(R.id.detail_match_title);
         score = findViewById(R.id.detail_teamScore);
         teamRed = findViewById(R.id.detail_teamRed_ImgBtn);
@@ -82,10 +85,10 @@ public class MatchDetailInfo extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position){
                     case 0:
-                       slide.addTarget(constraintLayout);
+                        slide.addTarget(constraintLayout);
                         TransitionManager.beginDelayedTransition(findViewById(R.id.detail_comment_layout),slide);
                         constraintLayout.setVisibility(View.GONE);
-                       slide.removeTarget(constraintLayout);
+                        slide.removeTarget(constraintLayout);
                         break;
                     case 1:
                         slide.addTarget(constraintLayout);

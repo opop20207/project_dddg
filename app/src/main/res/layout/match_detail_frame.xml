@@ -10,10 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/subDarkBlue"
+        app:layout_constraintBottom_toTopOf="@+id/detail_scrollview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/detail_match_backward"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_button_previous" />
 
         <TextView
             android:id="@+id/detail_match_title"
@@ -27,16 +38,6 @@
             app:layout_constraintStart_toStartOf="@+id/detail_match_backward"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
-
-        <ImageButton
-            android:id="@+id/detail_match_backward"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="#00FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_button_previous" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -154,10 +155,11 @@
         android:id="@+id/detail_comment_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:animateLayoutChanges="true">
+        app:layout_constraintTop_toBottomOf="@+id/detail_scrollview">
 
         <Button
             android:id="@+id/detail_comment_upload_btn"
@@ -169,6 +171,7 @@
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/materialTextField2"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.github.florent37.materialtextfield.MaterialTextField
@@ -182,10 +185,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:mtf_backgroundColor="#FFFFFF"
+            app:mtf_cardCollapsedHeight="1dp"
             app:mtf_image="@drawable/ic_comment_24"
             app:mtf_labelColor="#FFFFFF"
-            app:mtf_openKeyboardOnFocus="false"
-            app:mtf_cardCollapsedHeight="1dp">
+            app:mtf_openKeyboardOnFocus="false">
 
             <EditText
                 android:id="@+id/detail_comment_upload_edittext"
