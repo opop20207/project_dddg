@@ -6,10 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.dddg.project_dddg.FragmentFrame;
 import com.dddg.project_dddg.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.skyfishjy.library.RippleBackground;
+
+import static java.lang.Thread.sleep;
 
 public class AuthActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -18,10 +23,19 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        Button loginbtn = (Button)findViewById(R.id.loginbtn);
+        final RippleBackground rippleBackground=(RippleBackground)findViewById(R.id.content);
+        rippleBackground.startRippleAnimation();
+
+        Button loginbtn = (Button) findViewById(R.id.loginbtn);
         loginbtn.setOnClickListener(this);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user==null){
 
+        } else if (user!=null) {//만약 로그인이 되있는 상태이면 자동로그인
+            Intent i = new Intent(this, FragmentFrame.class);
+            startActivity(i);
+            finish();
+        }
 
     }
 

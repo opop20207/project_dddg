@@ -102,6 +102,8 @@ public class FragmentNews extends Fragment {
             @Override
             public void onClick(View v) {
                 webpage_num--;
+                prev.setVisibility(View.GONE);
+                next.setVisibility(View.GONE);
                 Loaddata loadData = new Loaddata();
                 loadData.start();
             }

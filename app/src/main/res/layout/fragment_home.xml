@@ -5,47 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="198dp"
-        android:layout_height="67dp"
-        android:layout_marginTop="80dp"
-        android:layout_weight="1"
+    <HorizontalScrollView
+        android:id="@+id/h_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">>
+        app:layout_constraintTop_toTopOf="parent">
 
-        <Spinner
-            android:id="@+id/spinner_year"
+        <RadioGroup
+            android:id="@+id/RadioGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_height="75dp"
+            android:orientation="horizontal"></RadioGroup>
 
-        <Spinner
-            android:id="@+id/spinner_month"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Spinner
-            android:id="@+id/spinner_data"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-
-    </LinearLayout>
+    </HorizontalScrollView>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="582dp"
-        android:layout_marginTop="2dp"
+        android:id="@+id/scrollView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/h_scrollView">
 
         <LinearLayout
             android:layout_width="match_parent"

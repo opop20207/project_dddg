@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.dddg.project_dddg.auth.AuthActivity;
+import com.dddg.project_dddg.auth.FirebaseUiActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,7 +14,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent framemain = new Intent(this, FragmentFrame.class);
+        Intent framemain = new Intent(this, AuthActivity.class);
         startActivity(framemain);
+        finish();
     }
 }

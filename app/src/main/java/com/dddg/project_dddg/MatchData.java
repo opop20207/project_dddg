@@ -1,6 +1,8 @@
 package com.dddg.project_dddg;
 
-public class MatchData {
+import java.io.Serializable;
+
+public class MatchData implements Serializable {
     String date;
     String title;
     String stage;
