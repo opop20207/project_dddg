@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,6 +47,9 @@ public class FragmentNews extends Fragment {
     TextView pagenum;
     int MaxPage = 1; //최대 페이지
     int webpage_num = 1;// 현재 페이지
+    int recyclerview_mode = 0;
+    ImageButton list_mode_btn;
+    ImageButton grid_mode_btn;
     public static FragmentNews getInstance(){
         if(instance==null){
             instance = new FragmentNews();
@@ -67,6 +72,8 @@ public class FragmentNews extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        list_mode_btn = getView().findViewById(R.id.news_list_mode_button);
+        grid_mode_btn = getView().findViewById(R.id.news_grid_mode_button);
         next = getView().findViewById(R.id.next_page_button);
         prev = getView().findViewById(R.id.previous_page_button);
         pagenum = getView().findViewById(R.id.news_pagenum);
@@ -74,7 +81,7 @@ public class FragmentNews extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false); //true는 최근것이 제일 위로
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        adapter = new NewsRVAdapter(newsData);
+        adapter = new NewsRVAdapter(newsData,recyclerview_mode);
         adapter.setOnItemClickListener(new NewsRVAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
@@ -87,7 +94,20 @@ public class FragmentNews extends Fragment {
         recyclerView.setAdapter(adapter);
         Loaddata loadData = new Loaddata();
         loadData.start();
-
+        list_mode_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerview_mode = 0;
+                adapter.notifyDataSetChanged();
+            }
+        });
+        grid_mode_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerview_mode = 1;
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         next.setOnClickListener(new View.OnClickListener() { //다음칸
             @Override
