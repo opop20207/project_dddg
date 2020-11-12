@@ -21,21 +21,23 @@
             android:id="@+id/news_list_mode_button"
             android:layout_width="50dp"
             android:layout_height="0dp"
+            android:background="@color/fui_transparent"
+            app:srcCompat="@drawable/ic_list_mode"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_list_mode" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/news_grid_mode_button"
             android:layout_width="50dp"
             android:layout_height="0dp"
+            android:background="@color/fui_transparent"
+            app:srcCompat="@drawable/ic_grid_mode"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_grid_mode" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView2"
@@ -92,8 +94,9 @@
         android:id="@+id/news_pagenum"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:gravity="right|center_vertical"
+        android:gravity="center"
         android:text="페이지수"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,8 +40,10 @@ public class FragmentNews extends Fragment {
 
     }
     RecyclerView recyclerView;
-    LinearLayoutManager layoutManager;
-    NewsRVAdapter adapter;
+    LinearLayoutManager layoutManager_list;
+    GridLayoutManager layoutManager_grid;
+    NewsRVAdapter adapter_list;
+    NewsRVAdapter adapter_grid;
     ArrayList<NewsData> newsData = new ArrayList<NewsData>(Arrays.asList(new NewsData()));
     FloatingActionButton next;
     FloatingActionButton prev;
@@ -78,11 +81,12 @@ public class FragmentNews extends Fragment {
         prev = getView().findViewById(R.id.previous_page_button);
         pagenum = getView().findViewById(R.id.news_pagenum);
         recyclerView = getView().findViewById(R.id.news_recyclerview);
-        layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false); //true는 최근것이 제일 위로
-        recyclerView.setLayoutManager(layoutManager);
+        layoutManager_list = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false); //true는 최근것이 제일 위로
+        layoutManager_grid = new GridLayoutManager(getActivity(),2);
+        recyclerView.setLayoutManager(layoutManager_list);
         recyclerView.setHasFixedSize(true);
-        adapter = new NewsRVAdapter(newsData,recyclerview_mode);
-        adapter.setOnItemClickListener(new NewsRVAdapter.OnItemClickListener(){
+        adapter_list = new NewsRVAdapter(newsData,0);
+        adapter_list.setOnItemClickListener(new NewsRVAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
                 // 뉴스창 클릭했을때
@@ -91,21 +95,35 @@ public class FragmentNews extends Fragment {
                 // 뉴스 웹주소로 연결
             }
         });
-        recyclerView.setAdapter(adapter);
+        adapter_grid = new NewsRVAdapter(newsData,1);
+        adapter_grid.setOnItemClickListener(new NewsRVAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(View view, int position) {
+                // 뉴스창 클릭했을때
+                Intent webintent = new Intent(Intent.ACTION_VIEW, Uri.parse(newsData.get(position).news_Url));
+                startActivity(webintent);
+                // 뉴스 웹주소로 연결
+            }
+        });
+        recyclerView.setAdapter(adapter_list);
         Loaddata loadData = new Loaddata();
         loadData.start();
         list_mode_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 recyclerview_mode = 0;
-                adapter.notifyDataSetChanged();
+                recyclerView.setAdapter(adapter_list);
+                recyclerView.setLayoutManager(layoutManager_list);
+                adapter_list.notifyDataSetChanged();
             }
         });
         grid_mode_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 recyclerview_mode = 1;
-                adapter.notifyDataSetChanged();
+                recyclerView.setAdapter(adapter_grid);
+                recyclerView.setLayoutManager(layoutManager_grid);
+                adapter_grid.notifyDataSetChanged();
             }
         });
 
@@ -160,7 +178,8 @@ public class FragmentNews extends Fragment {
                         public void run() {
                             // 새로 고침 목록
                             Log.d("로그","adapter.notifyDataSetChanged() 호출");
-                            adapter.notifyDataSetChanged(); //recyclerview 갱신
+                            if(recyclerview_mode == 0)adapter_list.notifyDataSetChanged(); //recyclerview 갱신
+                            else adapter_grid.notifyDataSetChanged(); //recyclerview 갱신
                             if(webpage_num <= 1) prev.setVisibility(View.GONE);
                             else prev.setVisibility(View.VISIBLE);
                             if(webpage_num >= MaxPage) next.setVisibility(View.GONE);
