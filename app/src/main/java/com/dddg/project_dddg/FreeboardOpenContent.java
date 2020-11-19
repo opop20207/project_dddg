@@ -2,6 +2,7 @@ package com.dddg.project_dddg;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.transition.Slide;
 import android.transition.Transition;
 import android.transition.TransitionManager;
@@ -88,13 +89,10 @@ public class FreeboardOpenContent extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         contentKey = this.getIntent().getStringExtra("key"); //child 경로
         anonyCheck.setChecked(true); //기본적으로 익명칸 체크
-        constraintLayout.setVisibility(View.VISIBLE); // 기본적으로는 안보임
+        constraintLayout.setVisibility(View.INVISIBLE); // 기본적으로는 안보임
         Transition slide = new Slide(Gravity.BOTTOM);
         slide.setDuration(1000);
-        slide.addTarget(constraintLayout);
-        TransitionManager.beginDelayedTransition(constraintLayout,slide);
-        constraintLayout.setVisibility(View.VISIBLE);
-        slide.removeTarget(constraintLayout);
+
         ///////data 로딩////////
         dataRef.child(contentKey).addValueEventListener(new ValueEventListener() {
             @Override
@@ -114,6 +112,15 @@ public class FreeboardOpenContent extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                slide.addTarget(constraintLayout);
+                TransitionManager.beginDelayedTransition(constraintLayout,slide);
+                constraintLayout.setVisibility(View.VISIBLE);
+                slide.removeTarget(constraintLayout);
+            }
+        },100);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

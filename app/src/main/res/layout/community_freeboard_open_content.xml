@@ -181,6 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:background="@color/subDarkBlue"
+                android:fontFamily="@font/dovemayo"
                 android:gravity="center_vertical"
                 android:hint="댓글 작성\n"
                 android:inputType="textShortMessage|text"

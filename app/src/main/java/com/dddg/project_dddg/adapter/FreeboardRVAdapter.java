@@ -38,8 +38,8 @@ public class FreeboardRVAdapter extends RecyclerView.Adapter<FreeboardRVAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.title.setText(freeboardData.get(position).getTitle());
-        holder.context.setText(freeboardData.get(position).getContext());
+        holder.title.setText(freeboardData.get(position).denseTitleget());
+        holder.context.setText(freeboardData.get(position).denseContextget());
         holder.date.setText(freeboardData.get(position).getDate());
         if(freeboardData.get(position).anonymouse) holder.email.setText("익명");
         else {

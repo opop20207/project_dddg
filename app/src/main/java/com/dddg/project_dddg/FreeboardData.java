@@ -28,21 +28,25 @@ public class FreeboardData {
     }
 
     public String getTitle() {
-        if(title.length()>40) return title.substring(0,40)+"...";
+        return title;
+    }
+    public String denseTitleget() {
+        if(title.length()>25) return title.substring(0,25)+"...";
         else return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getContext() {
+    public String denseContextget() {
         String returnContext = context;
         returnContext = returnContext.replaceAll("\n"," ");
         if( returnContext.length()>100) return  returnContext.substring(0,100)+"...";
         else return  returnContext;
     }
-
+    public String getContext() {
+        return context;
+    }
     public void setContext(String context) {
         this.context = context;
     }

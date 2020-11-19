@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,7 +22,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.dddg.project_dddg.adapter.NewsRVAdapter;
+import com.facebook.ProfileTracker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jsoup.Jsoup;
@@ -48,8 +53,7 @@ public class FragmentNews extends Fragment {
     int MaxPage = 1; //최대 페이지
     int webpage_num = 1;// 현재 페이지
     int recyclerview_mode = 0;
-    ImageButton list_mode_btn;
-    ImageButton grid_mode_btn;
+    ImageButton layout_mode_btn;
     public static FragmentNews getInstance(){
         if(instance==null){
             instance = new FragmentNews();
@@ -72,8 +76,7 @@ public class FragmentNews extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        list_mode_btn = getView().findViewById(R.id.news_list_mode_button);
-        grid_mode_btn = getView().findViewById(R.id.news_grid_mode_button);
+        layout_mode_btn = getView().findViewById(R.id.news_layout_mode_button);
         next = getView().findViewById(R.id.next_page_button);
         prev = getView().findViewById(R.id.previous_page_button);
         pagenum = getView().findViewById(R.id.news_pagenum);
@@ -105,22 +108,28 @@ public class FragmentNews extends Fragment {
         recyclerView.setAdapter(adapter_list);
         Loaddata loadData = new Loaddata();
         loadData.start();
-        list_mode_btn.setOnClickListener(new View.OnClickListener() {
+        RotateAnimation rotate = new RotateAnimation(0,360,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+        rotate.setDuration(500);
+
+        layout_mode_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recyclerview_mode = 0;
-                recyclerView.setAdapter(adapter_list);
-                recyclerView.setLayoutManager(layoutManager_list);
-                adapter_list.notifyDataSetChanged();
-            }
-        });
-        grid_mode_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recyclerview_mode = 1;
-                recyclerView.setAdapter(adapter_grid);
-                recyclerView.setLayoutManager(layoutManager_grid);
-                adapter_grid.notifyDataSetChanged();
+                if(recyclerview_mode == 0){
+                    recyclerview_mode = 1;
+                    recyclerView.setAdapter(adapter_grid);
+                    recyclerView.setLayoutManager(layoutManager_grid);
+                    Glide.with(getActivity()).load(R.drawable.ic_list_mode).into(layout_mode_btn);
+                    layout_mode_btn.startAnimation(rotate);
+                    adapter_grid.notifyDataSetChanged();
+                }
+               else {
+                    recyclerview_mode = 0;
+                    recyclerView.setAdapter(adapter_list);
+                    recyclerView.setLayoutManager(layoutManager_list);
+                    Glide.with(getActivity()).load(R.drawable.ic_grid_mode).into(layout_mode_btn);
+                    layout_mode_btn.startAnimation(rotate);
+                    adapter_list.notifyDataSetChanged();
+                }
             }
         });
 

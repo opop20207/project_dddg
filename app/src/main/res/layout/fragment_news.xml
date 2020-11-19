@@ -18,26 +18,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/news_list_mode_button"
+            android:id="@+id/news_layout_mode_button"
             android:layout_width="50dp"
             android:layout_height="0dp"
             android:background="@color/fui_transparent"
-            app:srcCompat="@drawable/ic_list_mode"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/news_grid_mode_button"
-            android:layout_width="50dp"
-            android:layout_height="0dp"
-            android:background="@color/fui_transparent"
-            app:srcCompat="@drawable/ic_grid_mode"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_grid_mode" />
 
         <TextView
             android:id="@+id/textView2"
@@ -48,8 +38,8 @@
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/news_grid_mode_button"
-            app:layout_constraintStart_toEndOf="@+id/news_list_mode_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
