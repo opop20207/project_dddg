@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dddg.project_dddg.adapter.CommentRVAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,8 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Comment;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,7 +33,7 @@ import java.util.HashMap;
 
 public class FragmentDetailComment extends Fragment {
     static FragmentDetailComment instance;
-    private FragmentDetailComment() {
+    public FragmentDetailComment() {
     }
     public static FragmentDetailComment getInstance(){
         if(instance==null){
@@ -105,7 +103,7 @@ public class FragmentDetailComment extends Fragment {
             }
         });
         commentBtn.setOnClickListener(v -> {
-            if(commentText.getText().toString()!=""){
+            if(!commentText.getText().toString().equals("")){
                 now = new Date();
                 CommentData upload = new CommentData(auth.getEmail(),commentText.getText().toString(),simpleDateFormat.format(now));
                 dateRef.child(key).push().setValue(upload).addOnCompleteListener(new OnCompleteListener<Void>() {

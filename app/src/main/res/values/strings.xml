@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">project_dddg</string>
+    <string name="freeboard_base_content">여기를 눌러서 글을 작성할 수 있습니다.\n[이용수칙]\n1.홍보성 글 작성금지\n2.선동성 글 작성금지\n3.불특정 인물 비방행위</string>
 </resources>

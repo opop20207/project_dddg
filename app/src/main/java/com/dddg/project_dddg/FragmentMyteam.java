@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 public class FragmentMyteam extends Fragment {
     static FragmentMyteam instance;
-    private FragmentMyteam() {
+    public FragmentMyteam() {
     }
 
     public static FragmentMyteam getInstance(){

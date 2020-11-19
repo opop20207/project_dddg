@@ -1,4 +1,4 @@
-package com.dddg.project_dddg;
+package com.dddg.project_dddg.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.dddg.project_dddg.MatchData;
+import com.dddg.project_dddg.R;
+import com.dddg.project_dddg.TeamImgUrl;
 
 import java.util.ArrayList;
 
@@ -18,10 +21,10 @@ public class MatchRVAdapter extends RecyclerView.Adapter<MatchRVAdapter.ViewHold
     public MatchRVAdapter(ArrayList<MatchData> MatchList) {
         this.MatchList = MatchList;
     }
-    interface OnItemClickListener{
+    public interface OnItemClickListener{
         void onItemClick(View view, int position);
     }
-    OnItemClickListener mlistener;
+    public OnItemClickListener mlistener;
     public void setOnItemClickListener(OnItemClickListener listener){
         mlistener = listener;
     }

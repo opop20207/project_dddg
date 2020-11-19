@@ -13,34 +13,27 @@ import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Constraints;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amar.library.ui.StickyScrollView;
 import com.bumptech.glide.Glide;
+import com.dddg.project_dddg.adapter.FragmentDetailOverviewVPAdapter;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -49,10 +42,8 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
 
@@ -65,7 +56,7 @@ import java.util.List;
 public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBarChangeListener,
         OnChartValueSelectedListener {
     static FragmentDetailOverview instance;
-    private FragmentDetailOverview() {
+    public FragmentDetailOverview() {
     }
     public static FragmentDetailOverview getInstance(){
         if(instance==null){
@@ -83,7 +74,7 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
     ExpandableLayout redExpand;
     ExpandableLayout blueExpand;
     Button expandBoth;
-    StickyScrollView scrollView;
+    ScrollView scrollView;
     ArrayList<BarDataSet> teamRedPlayerBarData;
     ArrayList<BarDataSet> teamBluePlayerBarData;
     ArrayList<BarEntry> tmpRed;
@@ -114,9 +105,9 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
         return inflater.inflate(R.layout.match_detail_fragment_overview,container,false);
     }
 public class PlayerChampData{
-        String name;
-        String pick;
-        String ban;
+        public String name;
+        public String pick;
+        public String ban;
         public PlayerChampData(String name,String pick, String ban){
             this.name = name;
             this.pick = pick;
@@ -142,7 +133,7 @@ public class PlayerChampData{
         expandBoth = getView().findViewById(R.id.detail_teamBoth_expand);
         redExpand = getView().findViewById(R.id.detail_teamRed_expand);
         blueExpand = getView().findViewById(R.id.detail_teamBlue_expand);
-        scrollView = getActivity().findViewById(R.id.detail_scrollview);
+        scrollView = getView().findViewById(R.id.detail_scrollview);
         expandBoth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,6 +252,16 @@ public class PlayerChampData{
             public void onItemClick() {
                 if(redExpand.isExpanded()){
                     redExpand.collapse();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.post(new Runnable(){
+                                public void run(){
+                                    scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                }
+                            });
+                        }
+                    },500);
                 }
             }
         });
@@ -269,6 +270,16 @@ public class PlayerChampData{
             public void onItemClick() {
                 if(blueExpand.isExpanded()){
                     blueExpand.collapse();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.post(new Runnable(){
+                                public void run(){
+                                    scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                }
+                            });
+                        }
+                    },500);
                 }
             }
         });

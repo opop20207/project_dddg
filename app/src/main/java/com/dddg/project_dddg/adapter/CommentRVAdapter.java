@@ -1,4 +1,4 @@
-package com.dddg.project_dddg;
+package com.dddg.project_dddg.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,16 +8,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
+import com.dddg.project_dddg.CommentData;
+import com.dddg.project_dddg.R;
+
 import java.util.ArrayList;
-import java.util.Date;
 
 public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.ViewHolder> {
     ArrayList<CommentData> commenList;
     public CommentRVAdapter(ArrayList<CommentData> commenList) {
         this.commenList = commenList;
     }
-    interface OnItemClickListener{
+    public interface OnItemClickListener{
         void onItemClick(View view, int position);
     }
     OnItemClickListener mlistener;
@@ -33,7 +34,8 @@ public class CommentRVAdapter extends RecyclerView.Adapter<CommentRVAdapter.View
     }
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        holder.commentID.setText(commenList.get(position).id+":  ");
+        if(commenList.get(position).anonymouse) holder.commentID.setText("익명");
+        else holder.commentID.setText(commenList.get(position).id);
         holder.commentContext.setText(commenList.get(position).context);
         holder.commentUploadTime.setText(commenList.get(position).time);
         holder.itemView.setOnClickListener(new View.OnClickListener(){

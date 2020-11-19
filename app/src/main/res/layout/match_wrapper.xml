@@ -11,8 +11,10 @@
         android:id="@+id/match_info"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:fontFamily="@font/dovemayo_bold"
         android:gravity="center_vertical"
         android:text="경기시간: 리그명"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

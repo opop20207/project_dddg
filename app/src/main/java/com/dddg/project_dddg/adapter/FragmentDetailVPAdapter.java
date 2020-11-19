@@ -1,4 +1,4 @@
-package com.dddg.project_dddg;
+package com.dddg.project_dddg.adapter;
 
 import android.content.Context;
 
@@ -9,6 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.dddg.project_dddg.FragmentDetailComment;
+import com.dddg.project_dddg.FragmentDetailOverview;
 
 public class FragmentDetailVPAdapter extends FragmentStateAdapter {
 

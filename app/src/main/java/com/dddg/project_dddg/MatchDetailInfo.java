@@ -1,36 +1,25 @@
 package com.dddg.project_dddg;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.transition.Fade;
 import android.transition.Slide;
 import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.amar.library.ui.StickyScrollView;
 import com.bumptech.glide.Glide;
-import com.github.florent37.materialtextfield.MaterialTextField;
+import com.dddg.project_dddg.adapter.FragmentDetailVPAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,14 +36,12 @@ public class MatchDetailInfo extends AppCompatActivity {
     TextView title;
     TextView score;
     ConstraintLayout constraintLayout;
-    StickyScrollView stickyScrollView;
     // 몇개 더 필요
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.match_detail_frame);
-        stickyScrollView = findViewById(R.id.detail_scrollview);
         title = findViewById(R.id.detail_match_title);
         score = findViewById(R.id.detail_teamScore);
         teamRed = findViewById(R.id.detail_teamRed_ImgBtn);

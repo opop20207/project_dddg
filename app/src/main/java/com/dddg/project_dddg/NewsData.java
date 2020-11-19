@@ -1,11 +1,11 @@
 package com.dddg.project_dddg;
 
 public class NewsData {
-    String title;
-    String context;
-    String img_url;
-    String news_Url;
-    String info;
+    public String title;
+    public String context;
+    public String img_url;
+    public String news_Url;
+    public String info;
     public  NewsData(){
 
     }

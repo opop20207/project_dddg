@@ -18,7 +18,7 @@
 
         <ImageButton
             android:id="@+id/detail_match_backward"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="#00FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -41,115 +41,110 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.amar.library.ui.StickyScrollView
-        android:id="@+id/detail_scrollview"
+
+    <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="true"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/detail_comment_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:stickyHeader="@id/detail_tablayout">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@color/subDarkBlue">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <ImageButton
+                android:id="@+id/detail_teamRed_ImgBtn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/detail_teamBlue_ImgBtn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/detail_teamBlue_name"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Blue Team Name"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/detail_teamBlue_ImgBtn"
+                app:layout_constraintStart_toStartOf="@+id/detail_teamBlue_ImgBtn"
+                app:layout_constraintTop_toBottomOf="@+id/detail_teamBlue_ImgBtn" />
+
+            <TextView
+                android:id="@+id/detail_teamRed_name"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Red Team Name"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/detail_teamRed_ImgBtn"
+                app:layout_constraintStart_toStartOf="@+id/detail_teamRed_ImgBtn"
+                app:layout_constraintTop_toBottomOf="@+id/detail_teamRed_ImgBtn" />
+
+            <TextView
+                android:id="@+id/detail_teamScore"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/subDarkBlue">
+                android:background="@drawable/borderline_box"
+                android:text="X - X"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/detail_teamBlue_ImgBtn"
+                app:layout_constraintStart_toEndOf="@+id/detail_teamRed_ImgBtn"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageButton
-                    android:id="@+id/detail_teamRed_ImgBtn"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="30dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:srcCompat="@tools:sample/avatars" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/detail_tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#FFFFFF"
+            app:tabIndicatorColor="@color/subDarkBlue">
 
-                <ImageButton
-                    android:id="@+id/detail_teamBlue_ImgBtn"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="30dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:srcCompat="@tools:sample/avatars" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monday" />
 
-                <TextView
-                    android:id="@+id/detail_teamBlue_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="Blue Team Name"
-                    android:textColor="#FFFFFF"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/detail_teamBlue_ImgBtn"
-                    app:layout_constraintStart_toStartOf="@+id/detail_teamBlue_ImgBtn"
-                    app:layout_constraintTop_toBottomOf="@+id/detail_teamBlue_ImgBtn" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuesday" />
 
-                <TextView
-                    android:id="@+id/detail_teamRed_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="Red Team Name"
-                    android:textColor="#FFFFFF"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/detail_teamRed_ImgBtn"
-                    app:layout_constraintStart_toStartOf="@+id/detail_teamRed_ImgBtn"
-                    app:layout_constraintTop_toBottomOf="@+id/detail_teamRed_ImgBtn" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wednesday" />
+        </com.google.android.material.tabs.TabLayout>
 
-                <TextView
-                    android:id="@+id/detail_teamScore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/borderline_box"
-                    android:text="X - X"
-                    android:textColor="#FFFFFF"
-                    android:textSize="30sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/detail_teamBlue_ImgBtn"
-                    app:layout_constraintStart_toEndOf="@+id/detail_teamRed_ImgBtn"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/detail_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/detail_tablayout"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#FFFFFF"
-                app:tabIndicatorColor="@color/subDarkBlue">
+    </LinearLayout>
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Monday" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tuesday" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Wednesday" />
-            </com.google.android.material.tabs.TabLayout>
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/detail_viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-    </com.amar.library.ui.StickyScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/detail_comment_layout"
@@ -158,8 +153,7 @@
         android:animateLayoutChanges="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_scrollview">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/detail_comment_upload_btn"

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 public class FragmentCommunityPredict extends Fragment {
     static FragmentCommunityPredict instance;
-    private FragmentCommunityPredict() {
+    public FragmentCommunityPredict() {
     }
 
     public static FragmentCommunityPredict getInstance(){

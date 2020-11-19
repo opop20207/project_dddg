@@ -1,4 +1,4 @@
-package com.dddg.project_dddg;
+package com.dddg.project_dddg.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,18 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.dddg.project_dddg.NewsData;
+import com.dddg.project_dddg.R;
 
 import java.util.ArrayList;
 
 public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.ViewHolder> {
     ArrayList<NewsData> NewsList;
     String newsContextString;
+    String newsTitleString;
     int mode;
     public NewsRVAdapter(ArrayList<NewsData> NewsList,int mode) { // 0이면 리스트,1 이면 그리드
         this.NewsList = NewsList;
         this.mode = mode;
     }
-    interface OnItemClickListener{
+    public interface OnItemClickListener{
         void onItemClick(View view, int position);
     }
     OnItemClickListener mlistener;
@@ -43,8 +46,10 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         newsContextString = NewsList.get(position).context;
+        newsTitleString = NewsList.get(position).title;
         if(newsContextString.length()>100) newsContextString = newsContextString.substring(0,100)+"...";
-        holder.newsTitle.setText(NewsList.get(position).title.toString());
+        if(newsTitleString.length()>30) newsTitleString = newsTitleString.substring(0,30)+"...";
+        holder.newsTitle.setText(newsTitleString);
         holder.newsContext.setText(newsContextString);
         holder.newsInfo.setText(NewsList.get(position).info.toString());
         Glide.with(holder.itemView).load(NewsList.get(position).img_url.toString()).into(holder.newsImg);
