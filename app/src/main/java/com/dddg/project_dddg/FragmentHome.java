@@ -86,10 +86,10 @@ public class FragmentHome extends Fragment {
             SimpleDateFormat simpleDateToday= new SimpleDateFormat("오늘\ndd");
             SimpleDateFormat simpleDateforSort = new SimpleDateFormat("MMdd");
             Date today = new Date();
-            int range_date = 14;
+            int range_date = 100;
             int widthofRadio =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,75,getResources().getDisplayMetrics());
             //radiobutton 날짜 범위 30 -> 30일 전부터 30일 후까지
-            for(int i=(-1*range_date); i<=range_date;i++) {
+            for(int i=(-1*range_date); i<=0;i++) {
                 RadioButton rdbtn = new RadioButton(getContext());
                 Calendar cal = new GregorianCalendar(Locale.KOREA);
                 cal.setTime(today);
