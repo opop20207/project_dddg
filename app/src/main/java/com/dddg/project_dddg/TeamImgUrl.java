@@ -32,12 +32,14 @@ public class TeamImgUrl {
                 break;
             case"CTU": returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FCTU.png?alt=media&token=3d4ec5b2-6d98-4d53-9126-9e1a1fa3eda4";
                 break;
+            case"Damwon Gaming":
             case"DAMWON Gaming": returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FDAMWONGaming.jpg?alt=media&token=6ba9a915-f43a-4286-937a-62cd69e51551";
                 break;
             case"DDoL": returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FDDoL.png?alt=media&token=32366e36-4bce-4573-be64-ba2250516d35";
                 break;
             case"DragonX": returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FDragonX.png?alt=media&token=c70fdd19-3f05-421b-a3a8-cc038b010882";
                 break;
+            case"Gen.G Esports":
             case"Gen.G eSports": returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FGen.GeSports.png?alt=media&token=c5660994-6a3e-44ef-a913-88b10647ef1c";
                 break;
             case"Griffin": returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FGriffin.jpg?alt=media&token=f7a5a847-6651-490c-9bca-55a4871d667d";

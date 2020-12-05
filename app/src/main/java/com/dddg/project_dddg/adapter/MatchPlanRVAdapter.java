@@ -154,43 +154,39 @@ public class MatchPlanRVAdapter extends RecyclerView.Adapter<MatchPlanRVAdapter.
         chart.setDrawBarShadow(false);
         chart.setDrawValueAboveBar(true);
         chart.getDescription().setEnabled(false);
+        chart.getLegend().setEnabled(false);
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
         // scaling can now only be done on x- and y-axis separately
         chart.setPinchZoom(false);
+        chart.setDoubleTapToZoomEnabled(false);
         // draw shadows for each bar that show the maximum value
         // chart.setDrawBarShadow(true);
         chart.setDrawGridBackground(false);
         XAxis xl = chart.getXAxis();
         xl.setPosition(XAxis.XAxisPosition.BOTTOM);
         xl.setTypeface(Typeface.DEFAULT);
-        xl.setDrawAxisLine(true);
+        xl.setDrawAxisLine(false);
         xl.setDrawGridLines(false);
         xl.setGranularity(10f);
-
+        xl.setDrawLabels(false);
         YAxis yl = chart.getAxisLeft();
         yl.setTypeface(Typeface.DEFAULT);
-        yl.setDrawAxisLine(true);
+        yl.setDrawAxisLine(false);
         yl.setDrawGridLines(false);
         yl.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        yl.setDrawLabels(false);
 //        yl.setInverted(true);
         YAxis yr = chart.getAxisRight();
         yr.setTypeface(Typeface.DEFAULT);
-        yr.setDrawAxisLine(true);
+        yr.setDrawAxisLine(false);
         yr.setDrawGridLines(false);
         yr.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        yr.setDrawLabels(false);
 //        yr.setInverted(true);
-
         chart.setFitBars(true);
         chart.animateY(500);
 
-        Legend l = chart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(false);
-        l.setFormSize(8f);
-        l.setXEntrySpace(4f);
 
     }
     void setDatachart(HorizontalBarChart chart, int red,int blue){ //비율로

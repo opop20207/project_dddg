@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/roundshape_white"
+    android:background="@drawable/bottom_line_box"
     android:paddingBottom="30dp">
 
     <ImageView
@@ -43,7 +43,8 @@
     <com.github.mikephil.charting.charts.HorizontalBarChart
         android:id="@+id/match_plan_hori_barchart"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="75dp"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@+id/match_plan_team2_img"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/match_plan_team1_img"
@@ -53,7 +54,11 @@
         android:id="@+id/match_plan_team1_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/dovemayo_bold"
         android:text="TextView"
+        android:textColor="#000000"
+        android:textColorHint="#FFFFFF"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/match_plan_team1_img"
         app:layout_constraintStart_toStartOf="@+id/match_plan_team1_img"
         app:layout_constraintTop_toBottomOf="@+id/match_plan_team1_img" />
@@ -62,7 +67,9 @@
         android:id="@+id/match_plan_team2_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/dovemayo_bold"
         android:text="TextView"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="@+id/match_plan_team2_img"
         app:layout_constraintStart_toStartOf="@+id/match_plan_team2_img"
         app:layout_constraintTop_toBottomOf="@+id/match_plan_team2_img" />
@@ -75,7 +82,7 @@
         android:gravity="center"
         android:text="TextView"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
