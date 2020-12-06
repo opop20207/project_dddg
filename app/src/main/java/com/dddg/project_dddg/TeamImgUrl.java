@@ -126,6 +126,13 @@ public class TeamImgUrl {
                 break;
             case "GAM Esports":returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FAdonis%20Marines.png?alt=media&token=1576f75f-4609-4a78-a43e-5265628ef040";
                 break;
+            case "JD Gaming":
+            case "JDG":returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FJD%20Gaming.png?alt=media&token=fc88d46c-fee6-41fe-8c2e-063fffa911f6";
+                break;
+            case "PSG Talon":returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FPSG%20Talon.png?alt=media&token=eb1e2167-2c6a-469c-973c-04b7a55765e3";
+                break;
+
+
             default: returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2F%ED%9B%88%EC%88%98%EC%A2%8B%EC%9D%80%EB%82%A0.png?alt=media&token=0757e50e-3db5-4f7f-81b0-4262cffbfad6";
                 break;
         }
