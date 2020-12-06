@@ -7,6 +7,47 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:buttonStyle">@style/DovemayoButtonStyle</item>
+        <item name="android:editTextStyle">@style/DovemayoEditTextStyle</item>
+        <item name="android:radioButtonStyle">@style/DovemayoRadioButtonStyle</item>
+        <item name="android:checkboxStyle">@style/DovemayoCheckboxStyle</item>
+        <item name="android:textViewStyle">@style/DovemayoTextViewStyle</item>
+    </style>
+    <style name="LoginTheme" parent="FirebaseUI">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/subDarkBlue</item>
+        <item name="colorAccent">@color/subDarkBlue</item>
+        <item name="colorButtonNormal">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@android:color/white</item>
+        <item name="colorControlHighlight">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:windowBackground">@color/subDarkBlue</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColorHint">@android:color/white</item>
     </style>
 
+    <style name="DovemayoTextViewStyle" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/dovemayo</item>
+    </style>
+    <style name="DovemayoButtonStyle" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
+        <item name="android:fontFamily">@font/dovemayo</item>
+    </style>
+    <style name="DovemayoEditTextStyle" parent="@android:style/Widget.DeviceDefault.EditText">
+        <item name="android:fontFamily">@font/dovemayo</item>
+    </style>
+    <style name="DovemayoRadioButtonStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.RadioButton">
+        <item name="android:fontFamily">@font/dovemayo</item>
+    </style>
+    <style name="DovemayoCheckboxStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
+        <item name="android:fontFamily">@font/dovemayo</item>
+    </style>
+    <style name="MyCheckBox" parent="AppTheme">
+        <item name="colorControlNormal">#FFFFFF</item>   <!-- normal border color change as you wish -->
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item> <!-- checkbox text color -->
+    </style>
 </resources>

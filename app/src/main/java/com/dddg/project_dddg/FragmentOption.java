@@ -16,7 +16,7 @@ import com.dddg.project_dddg.auth.SignedinActivity;
 
 public class FragmentOption extends Fragment {
     static FragmentOption instance;
-    private FragmentOption() {
+    public FragmentOption() {
     }
 
     public static FragmentOption getInstance(){

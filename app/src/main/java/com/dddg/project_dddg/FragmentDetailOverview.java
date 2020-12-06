@@ -13,26 +13,23 @@ import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Constraints;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amar.library.ui.StickyScrollView;
+import com.bumptech.glide.Glide;
+import com.dddg.project_dddg.adapter.FragmentDetailOverviewVPAdapter;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -45,11 +42,10 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
 
@@ -62,7 +58,7 @@ import java.util.List;
 public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBarChangeListener,
         OnChartValueSelectedListener {
     static FragmentDetailOverview instance;
-    private FragmentDetailOverview() {
+    public FragmentDetailOverview() {
     }
     public static FragmentDetailOverview getInstance(){
         if(instance==null){
@@ -70,6 +66,8 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
         }
         return instance;
     }
+    TextView winTeam;
+    ImageView winTeamImg;
     PieChart vote_rate;
     BarChart kill_Red;
     BarChart kill_Blue;
@@ -78,7 +76,7 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
     ExpandableLayout redExpand;
     ExpandableLayout blueExpand;
     Button expandBoth;
-    StickyScrollView scrollView;
+    ScrollView scrollView;
     ArrayList<BarDataSet> teamRedPlayerBarData;
     ArrayList<BarDataSet> teamBluePlayerBarData;
     ArrayList<BarEntry> tmpRed;
@@ -109,9 +107,9 @@ public class FragmentDetailOverview extends Fragment implements SeekBar.OnSeekBa
         return inflater.inflate(R.layout.match_detail_fragment_overview,container,false);
     }
 public class PlayerChampData{
-        String name;
-        String pick;
-        String ban;
+        public String name;
+        public String pick;
+        public String ban;
         public PlayerChampData(String name,String pick, String ban){
             this.name = name;
             this.pick = pick;
@@ -123,6 +121,13 @@ public class PlayerChampData{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         matchData = (MatchData) getActivity().getIntent().getSerializableExtra("matchdata");
+        winTeam = getView().findViewById(R.id.detail_win_team_name);
+        winTeamImg = getView().findViewById(R.id.detail_win_team_img);
+        String winTeamString;
+        if(Integer.parseInt(matchData.winteam)>1) winTeamString = matchData.team2_name;
+        else winTeamString = matchData.team1_name;
+        winTeam.setText(winTeamString);
+        Glide.with(getView()).load(TeamImgUrl.Url(winTeamString)).into(winTeamImg);
         kill_Red = getView().findViewById(R.id.detail_teamRed_kill_chart);
         kill_Blue = getView().findViewById(R.id.detail_teamBlue_kill_chart);
         kill_Red.setVisibility(View.GONE);
@@ -130,7 +135,7 @@ public class PlayerChampData{
         expandBoth = getView().findViewById(R.id.detail_teamBoth_expand);
         redExpand = getView().findViewById(R.id.detail_teamRed_expand);
         blueExpand = getView().findViewById(R.id.detail_teamBlue_expand);
-        scrollView = getActivity().findViewById(R.id.detail_scrollview);
+        scrollView = getView().findViewById(R.id.detail_scrollview);
         expandBoth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,14 +200,14 @@ public class PlayerChampData{
             kill_Blue.animateY(3000, Easing.EaseInOutQuad);
             Legend R = kill_Red.getLegend();
             R.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-            R.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+            R.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
             R.setOrientation(Legend.LegendOrientation.HORIZONTAL);
             R.setWordWrapEnabled(true);
             R.setTextColor(Color.BLACK);
             R.setForm(Legend.LegendForm.CIRCLE);
             Legend B = kill_Blue.getLegend();
             B.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-            B.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+            B.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
             B.setOrientation(Legend.LegendOrientation.HORIZONTAL);
             B.setWordWrapEnabled(true);
             B.setTextColor(Color.BLACK);
@@ -249,6 +254,16 @@ public class PlayerChampData{
             public void onItemClick() {
                 if(redExpand.isExpanded()){
                     redExpand.collapse();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.post(new Runnable(){
+                                public void run(){
+                                    scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                }
+                            });
+                        }
+                    },500);
                 }
             }
         });
@@ -257,6 +272,16 @@ public class PlayerChampData{
             public void onItemClick() {
                 if(blueExpand.isExpanded()){
                     blueExpand.collapse();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.post(new Runnable(){
+                                public void run(){
+                                    scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                }
+                            });
+                        }
+                    },500);
                 }
             }
         });
@@ -308,28 +333,84 @@ public class PlayerChampData{
 
         BarData dataRed = new BarData();
         BarData dataBlue = new BarData();
-        for(int i = 0;i<5;i++){//선수
-            for(int j = 0;j<3;j++){//킬뎃어시
-                tmpRed.add(new BarEntry(i*4+j, Integer.parseInt(teamRedPlayScore.get(i).split("/")[j])));
-                tmpBlue.add(new BarEntry(i*4+j, Integer.parseInt(teamBluePlayScore.get(i).split("/")[j])));
-            }
-            teamRedPlayerBarData.add(new BarDataSet(tmpRed,teamRedPlayerName.get(i)));
-            teamBluePlayerBarData.add(new BarDataSet(tmpBlue,teamBluePlayerName.get(i)));
-            teamRedPlayerBarData.get(i).setColors(new int[] {getColor(0),getColor(1),getColor(2)});
-            teamBluePlayerBarData.get(i).setColors(new int[] {getColor(0),getColor(1),getColor(2)});
-            dataRed.addDataSet(teamRedPlayerBarData.get(i));
-            dataBlue.addDataSet(teamBluePlayerBarData.get(i));
+        ArrayList<ArrayList<BarEntry>> dataReds = new ArrayList<>();
+        ArrayList<ArrayList<BarEntry>> dataBlues =new ArrayList<>();
+        ArrayList<BarEntry> red_kill_p = new ArrayList<>();
+         ArrayList<BarEntry> red_Asist_p=new ArrayList<>();
+         ArrayList<BarEntry> red_Death_p=new ArrayList<>();
+        ArrayList<BarEntry> blue_kill_p=new ArrayList<>();
+        ArrayList<BarEntry> blue_Asist_p=new ArrayList<>();
+        ArrayList<BarEntry> blue_Death_p=new ArrayList<>();
+        for(int i = 0;i<5;i++){
+           red_kill_p.add(new BarEntry(i,Integer.parseInt((teamRedPlayScore.get(i).split("/")[0]))));
+            red_Asist_p.add(new BarEntry(i,Integer.parseInt((teamRedPlayScore.get(i).split("/")[1]))));
+            red_Death_p.add(new BarEntry(i,Integer.parseInt((teamRedPlayScore.get(i).split("/")[2]))));
+            blue_kill_p.add(new BarEntry(i,Integer.parseInt((teamBluePlayScore.get(i).split("/")[0]))));
+            blue_Asist_p.add(new BarEntry(i,Integer.parseInt((teamBluePlayScore.get(i).split("/")[1]))));
+            blue_Death_p.add(new BarEntry(i,Integer.parseInt((teamBluePlayScore.get(i).split("/")[2]))));
         }
-        dataRed.setValueTextSize(15f);
-        dataBlue.setValueTextSize(15f);
+        dataReds.add(red_kill_p); dataReds.add(red_Asist_p); dataReds.add(red_Death_p);
+        dataBlues.add(blue_kill_p);dataBlues.add(blue_Asist_p);dataBlues.add(blue_Death_p);
+        String[] labeltmp = {"kill","Death","Asist"};
+        for(int i = 0;i<3;i++) {
+                teamRedPlayerBarData.add(new BarDataSet(dataReds.get(i), labeltmp[i]));
+                teamRedPlayerBarData.get(i).setColor(getColor(i));
+                teamBluePlayerBarData.add(new BarDataSet(dataBlues.get(i), labeltmp[i]));
+                teamBluePlayerBarData.get(i).setColor(getColor(i));
+        }
+
+
+//        for(int i = 0;i<5;i++){//선수
+//            for(int j = 0;j<3;j++){//킬뎃어시
+//                tmpRed.add(new BarEntry(i*4+j, Integer.parseInt(teamRedPlayScore.get(i).split("/")[j])));
+//                tmpBlue.add(new BarEntry(i*4+j, Integer.parseInt(teamBluePlayScore.get(i).split("/")[j])));
+//            }
+//            teamRedPlayerBarData.add(new BarDataSet(tmpRed,teamRedPlayerName.get(i)));
+//            teamBluePlayerBarData.add(new BarDataSet(tmpBlue,teamBluePlayerName.get(i)));
+//            teamRedPlayerBarData.get(i).setColors(new int[] {getColor(0),getColor(1),getColor(2)});
+//            teamBluePlayerBarData.get(i).setColors(new int[] {getColor(0),getColor(1),getColor(2)});
+//            dataRed.addDataSet(teamRedPlayerBarData.get(i));
+//            dataBlue.addDataSet(teamBluePlayerBarData.get(i));
+//        }
+        XAxis xAxisRed = kill_Red.getXAxis();
+        XAxis xAxisBlue = kill_Blue.getXAxis();
+        xAxisRed.setDrawGridLines(false);
+        kill_Red.getAxisLeft().setDrawGridLines(false);
+        kill_Red.getAxisRight().setDrawGridLines(false);
+        xAxisBlue.setDrawGridLines(false);
+        kill_Blue.getAxisLeft().setDrawGridLines(false);
+        kill_Blue.getAxisRight().setDrawGridLines(false);
+        xAxisRed.setValueFormatter(new IndexAxisValueFormatter(teamRedPlayerName));
+        xAxisBlue.setValueFormatter(new IndexAxisValueFormatter(teamBluePlayerName));
+        xAxisRed.setCenterAxisLabels(true);
+        xAxisBlue.setCenterAxisLabels(true);
+        xAxisRed.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
+        xAxisBlue.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
+        xAxisRed.setGranularity(1);
+        xAxisBlue.setGranularity(1);
+        xAxisRed.setGranularityEnabled(true);
+        xAxisBlue.setGranularityEnabled(true);
+        dataRed = new BarData(teamRedPlayerBarData.get(0),teamRedPlayerBarData.get(1),teamRedPlayerBarData.get(2));
+        dataBlue = new BarData(teamBluePlayerBarData.get(0),teamBluePlayerBarData.get(1),teamBluePlayerBarData.get(2));
+        dataRed.setBarWidth(0.2f);
+        dataBlue.setBarWidth(0.2f);
+        dataRed.setDrawValues(true);
+        dataBlue.setDrawValues(true);
         dataRed.setValueFormatter(new LargeValueFormatter());
         dataBlue.setValueFormatter(new LargeValueFormatter());
         dataRed.setValueTypeface(Typeface.DEFAULT);
         dataBlue.setValueTypeface(Typeface.DEFAULT);
-
         kill_Red.setData(dataRed);
-        kill_Red.invalidate();
         kill_Blue.setData(dataBlue);
+        kill_Red.getXAxis().setAxisMinimum(0);
+        kill_Blue.getXAxis().setAxisMinimum(0);
+        kill_Red.getXAxis().setAxisMaximum(5f);
+        kill_Blue.getXAxis().setAxisMaximum(5f);
+        kill_Red.groupBars(0,0.1f,0.1f);
+        kill_Blue.groupBars(0,0.1f,0.1f);
+//        kill_Red.setVisibleXRangeMaximum(5);
+//        kill_Blue.setVisibleXRangeMaximum(5);
+        kill_Red.invalidate();
         kill_Blue.invalidate();
     }//대충 bar 데이터 넣는곳
     public int getColor(int i){

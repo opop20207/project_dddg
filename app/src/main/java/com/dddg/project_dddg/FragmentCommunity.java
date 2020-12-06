@@ -9,11 +9,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.dddg.project_dddg.adapter.FragmentCommunityVPAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -23,7 +21,7 @@ import java.util.Arrays;
 public class FragmentCommunity extends Fragment {
 
     static FragmentCommunity instance;
-    private FragmentCommunity() {
+    public FragmentCommunity() {
     }
 
    private FragmentCommunityVPAdapter fragmentCommunityVPAdapter;
@@ -55,6 +53,7 @@ public class FragmentCommunity extends Fragment {
         viewPager.setSaveEnabled(false);
         final ArrayList<String> tablayoutString = new ArrayList<String>(Arrays.asList("자유게시판","경기예측"));
         TabLayout tabLayout = getView().findViewById(R.id.community_tablayout);
+        tabLayout.setTabIndicatorFullWidth(true);
         new TabLayoutMediator(tabLayout,viewPager,
                 (tab,position)-> tab.setText(tablayoutString.get(position))
         ).attach();

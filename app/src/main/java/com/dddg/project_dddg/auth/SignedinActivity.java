@@ -57,7 +57,7 @@ public class SignedinActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()){
             case R.id.signout://로그아웃 버튼
                 signOut();
-                Intent i = new Intent(this, AuthActivity.class);
+                Intent i = new Intent(this, FirebaseUiActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 Toast.makeText(this,"로그아웃",Toast.LENGTH_SHORT).show();
@@ -71,7 +71,7 @@ public class SignedinActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void out(){ //계정 삭제시 로그인 화면으로 돌아가는 함수
-        Intent i = new Intent(this, AuthActivity.class);
+        Intent i = new Intent(this, FirebaseUiActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         Toast.makeText(this,"계정 삭제",Toast.LENGTH_SHORT).show();

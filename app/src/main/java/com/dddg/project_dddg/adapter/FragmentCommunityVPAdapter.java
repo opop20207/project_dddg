@@ -1,4 +1,4 @@
-package com.dddg.project_dddg;
+package com.dddg.project_dddg.adapter;
 
 import android.os.Parcelable;
 
@@ -10,6 +10,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.adapter.FragmentViewHolder;
+
+import com.dddg.project_dddg.FragmentCommunityFreeboard;
+import com.dddg.project_dddg.FragmentCommunityPredict;
 
 public class FragmentCommunityVPAdapter extends FragmentStateAdapter {
 

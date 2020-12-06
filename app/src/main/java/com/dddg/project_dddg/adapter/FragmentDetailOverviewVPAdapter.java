@@ -1,4 +1,4 @@
-package com.dddg.project_dddg;
+package com.dddg.project_dddg.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.dddg.project_dddg.ChampImgUrl;
+import com.dddg.project_dddg.FragmentDetailOverview;
+import com.dddg.project_dddg.R;
 
 import java.util.ArrayList;
 
 public class FragmentDetailOverviewVPAdapter extends RecyclerView.Adapter<FragmentDetailOverviewVPAdapter.viewHolder> {
     ArrayList<FragmentDetailOverview.PlayerChampData> playerChampData;
     public onItemClickListener mlistener;
-    FragmentDetailOverviewVPAdapter(ArrayList<FragmentDetailOverview.PlayerChampData> data){
+    public FragmentDetailOverviewVPAdapter(ArrayList<FragmentDetailOverview.PlayerChampData> data){
         playerChampData = data;
     }
     public interface onItemClickListener{

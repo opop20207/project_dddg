@@ -43,10 +43,7 @@ public class FirebaseUiActivity extends AppCompatActivity {
                 startActivity(i);
                 finish();
             }
-            else{// 실패시 다시 첫 화면으로 돌아감
-                Intent i = new Intent(this, AuthActivity.class);
-                Toast.makeText(this,"로그인 실패\n다시 로그인 해주세요",Toast.LENGTH_SHORT).show();
-                startActivity(i);
+            else{
                 finish();
             }
         }
@@ -55,9 +52,9 @@ public class FirebaseUiActivity extends AppCompatActivity {
     private void signin(){//로그인 창 화면
         startActivityForResult(
                 AuthUI.getInstance().createSignInIntentBuilder()
-                        .setTheme(getSelectedTheme())
-                        .setLogo(getSelectedLogo())
                         .setAvailableProviders(getSelectedProviders())
+                        .setTheme(R.style.LoginTheme)
+                        .setLogo(R.drawable.penguin)
                         .setTosAndPrivacyPolicyUrls("", "")
                         .setIsSmartLockEnabled(true)
                         .build(),RC_SIGN_IN

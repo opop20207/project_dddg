@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@drawable/bottom_line_box">
+
+    <TextView
+        android:id="@+id/freeboard_wrapper_title"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:background="@color/fui_transparent"
+        android:fontFamily="@font/dovemayo_bold"
+        android:gravity="fill_vertical"
+        android:text="제목"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/freeboard_wrapper_email"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:background="@color/fui_transparent"
+        android:gravity="center_vertical"
+        android:text="이메일"
+        app:layout_constraintBottom_toBottomOf="@+id/freeboard_wrapper_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/freeboard_wrapper_date"
+        app:layout_constraintTop_toTopOf="@+id/freeboard_wrapper_date" />
+
+    <TextView
+        android:id="@+id/freeboard_wrapper_date"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@color/fui_transparent"
+        android:gravity="fill_vertical"
+        android:text="날짜"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/freeboard_wrapper_context" />
+
+    <TextView
+        android:id="@+id/freeboard_wrapper_comment_num"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/fui_transparent"
+        android:gravity="right|center_vertical"
+        android:text="댓글수"
+        app:layout_constraintBottom_toBottomOf="@+id/freeboard_wrapper_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/freeboard_wrapper_email"
+        app:layout_constraintTop_toTopOf="@+id/freeboard_wrapper_email" />
+
+    <TextView
+        android:id="@+id/freeboard_wrapper_context"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/fui_transparent"
+        android:text="게시글 내용요약"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/freeboard_wrapper_title" />
+</androidx.constraintlayout.widget.ConstraintLayout>
