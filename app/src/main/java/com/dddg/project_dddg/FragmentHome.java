@@ -147,7 +147,7 @@ public class FragmentHome extends Fragment {
         recyclerView = getView().findViewById(R.id.home_recyclerview);
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new MatchRVAdapter(matchDataOrdered);
+        adapter = new MatchRVAdapter(matchDataOrdered,getActivity());
         adapter.setOnItemClickListener(new MatchRVAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

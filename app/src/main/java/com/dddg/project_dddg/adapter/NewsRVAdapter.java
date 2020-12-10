@@ -1,9 +1,12 @@
 package com.dddg.project_dddg.adapter;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,10 +23,12 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.ViewHolder
     ArrayList<NewsData> NewsList;
     String newsContextString;
     String newsTitleString;
+    Context context;
     int mode;
-    public NewsRVAdapter(ArrayList<NewsData> NewsList,int mode) { // 0이면 리스트,1 이면 그리드
+    public NewsRVAdapter(ArrayList<NewsData> NewsList, int mode, Context context) { // 0이면 리스트,1 이면 그리드
         this.NewsList = NewsList;
         this.mode = mode;
+        this.context = context;
     }
     public interface OnItemClickListener{
         void onItemClick(View view, int position);
@@ -61,6 +66,7 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.ViewHolder
             }
         });
         // 내용물 설정
+        setAnimation(holder.itemView,position);
     }
 
     @Override
@@ -91,5 +97,10 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.ViewHolder
             }
 
     }
+    }
+    private void setAnimation(View viewtoAnimate, int position){
+        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+        animation.setDuration(500);
+        viewtoAnimate.startAnimation(animation);
     }
 }

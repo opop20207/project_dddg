@@ -85,7 +85,7 @@ public class FragmentNews extends Fragment {
         layoutManager_grid = new GridLayoutManager(getActivity(),2);
         recyclerView.setLayoutManager(layoutManager_list);
         recyclerView.setHasFixedSize(true);
-        adapter_list = new NewsRVAdapter(newsData,0);
+        adapter_list = new NewsRVAdapter(newsData,0,getActivity());
         adapter_list.setOnItemClickListener(new NewsRVAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
@@ -95,7 +95,7 @@ public class FragmentNews extends Fragment {
                 // 뉴스 웹주소로 연결
             }
         });
-        adapter_grid = new NewsRVAdapter(newsData,1);
+        adapter_grid = new NewsRVAdapter(newsData,1,getActivity());
         adapter_grid.setOnItemClickListener(new NewsRVAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {

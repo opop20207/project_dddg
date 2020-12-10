@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import java.util.List;
 public class FirebaseUiActivity extends AppCompatActivity {
     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User");
     private static final int RC_SIGN_IN = 1000;
+    FirebaseUser user_f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +48,15 @@ public class FirebaseUiActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RC_SIGN_IN){
             IdpResponse response = IdpResponse.fromResultIntent(data);
-
             if(resultCode == RESULT_OK){//로그인 성공시 맵 화면으로 넘어감
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                userRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                user_f = FirebaseAuth.getInstance().getCurrentUser();
+                userRef.child(user_f.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         UserData user = snapshot.getValue(UserData.class);
                         if(user==null){ // 데이터 세팅
                             user = new UserData();
-                            userRef.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            userRef.child(user_f.getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){

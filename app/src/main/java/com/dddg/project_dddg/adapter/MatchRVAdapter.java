@@ -1,11 +1,15 @@
 package com.dddg.project_dddg.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.AnimatorRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,8 +22,10 @@ import java.util.ArrayList;
 
 public class MatchRVAdapter extends RecyclerView.Adapter<MatchRVAdapter.ViewHolder> {
     ArrayList<MatchData> MatchList;
-    public MatchRVAdapter(ArrayList<MatchData> MatchList) {
+    Context context;
+    public MatchRVAdapter(ArrayList<MatchData> MatchList, Context context) {
         this.MatchList = MatchList;
+        this.context = context;
     }
     public interface OnItemClickListener{
         void onItemClick(View view, int position);
@@ -57,6 +63,7 @@ public class MatchRVAdapter extends RecyclerView.Adapter<MatchRVAdapter.ViewHold
                     mlistener.onItemClick(holder.itemView,position);
             }
         });
+        setAnimation(holder.itemView,position);
         // 내용물 설정
     }
 
@@ -76,5 +83,10 @@ public class MatchRVAdapter extends RecyclerView.Adapter<MatchRVAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
     }
+    }
+    private void setAnimation(View viewtoAnimate, int position){
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            animation.setDuration(500);
+            viewtoAnimate.startAnimation(animation);
     }
 }

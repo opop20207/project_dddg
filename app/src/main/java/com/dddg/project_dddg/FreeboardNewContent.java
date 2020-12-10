@@ -81,7 +81,7 @@ public class FreeboardNewContent extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                // Userdata에 없데이트 필요함
+                                // Userdata에 업데이트 필요함
                                 userRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
