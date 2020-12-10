@@ -145,27 +145,8 @@ public class FreeboardOpenContent extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                userRef.child(auth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        UserData userData = snapshot.getValue(UserData.class);
-                                        userData.commentAdd(new Pair<CommentData,String>(upload,contentKey));
-                                        userRef.child(auth.getUid()).updateChildren(userData.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if(task.isSuccessful()){
-                                                    Toast.makeText(FreeboardOpenContent.this, "댓글완료", Toast.LENGTH_SHORT).show();
-                                                    commentEditText.setText("");
-                                                }
-                                            }
-                                        });
-                                    }
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
-
+                                Toast.makeText(FreeboardOpenContent.this, "댓글완료", Toast.LENGTH_SHORT).show();
+                                commentEditText.setText("");
                             }
                         }
                     });
