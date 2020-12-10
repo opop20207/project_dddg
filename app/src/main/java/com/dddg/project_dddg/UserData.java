@@ -6,12 +6,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserData {
-    public ArrayList<String> myTeamList;
+    public ArrayList<TeamData> myTeamList;
     public ArrayList <Pair<CommentData,String>>commentList;//<comment, key>
     public ArrayList<Pair<FreeboardData,String>>freeBoardList;
     public int point;
 
-    public UserData(ArrayList<String> myTeamList, ArrayList<Pair<CommentData, String>> commentList, ArrayList<Pair<FreeboardData, String>> freeBoardList, int point) {
+    public UserData() {
+        myTeamList = new ArrayList<>();
+        commentList = new ArrayList<>();
+        freeBoardList = new ArrayList<>();
+        point  = 0;
+    }
+    public void freeboardAdd(Pair<FreeboardData,String> a){
+        freeBoardList.add(a);
+    }
+    public UserData(ArrayList<TeamData> myTeamList, ArrayList<Pair<CommentData, String>> commentList, ArrayList<Pair<FreeboardData, String>> freeBoardList, int point) {
         this.myTeamList = myTeamList;
         this.commentList = commentList;
         this.freeBoardList = freeBoardList;
@@ -25,11 +34,11 @@ public class UserData {
         map.put("point",point);
         return map;
     }
-    public ArrayList<String> getMyTeamList() {
+    public ArrayList<TeamData> getMyTeamList() {
         return myTeamList;
     }
 
-    public void setMyTeamList(ArrayList<String> myTeamList) {
+    public void setMyTeamList(ArrayList<TeamData> myTeamList) {
         this.myTeamList = myTeamList;
     }
 

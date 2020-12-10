@@ -1,5 +1,6 @@
 package com.dddg.project_dddg.auth;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,14 +11,24 @@ import android.widget.Toast;
 import com.dddg.project_dddg.FragmentFrame;
 import com.dddg.project_dddg.MainActivity;
 import com.dddg.project_dddg.R;
+import com.dddg.project_dddg.UserData;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FirebaseUiActivity extends AppCompatActivity {
-
+    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User");
     private static final int RC_SIGN_IN = 1000;
 
     @Override
@@ -37,18 +48,43 @@ public class FirebaseUiActivity extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if(resultCode == RESULT_OK){//로그인 성공시 맵 화면으로 넘어감
-                Intent i = new Intent(this, FragmentFrame.class);
-                Toast.makeText(this,"로그인 성공",Toast.LENGTH_SHORT).show();
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                finish();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                userRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        UserData user = snapshot.getValue(UserData.class);
+                        if(user==null){ // 데이터 세팅
+                            user = new UserData();
+                            userRef.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                       toFragmentHome();
+                                    }
+                                }
+                            });
+                        }
+                        else toFragmentHome();
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
             else{
                 finish();
             }
         }
     }
-
+    private void toFragmentHome(){
+        Intent i = new Intent(this, FragmentFrame.class);
+        Toast.makeText(this,"로그인 성공",Toast.LENGTH_SHORT).show();
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        finish();
+    }
     private void signin(){//로그인 창 화면
         startActivityForResult(
                 AuthUI.getInstance().createSignInIntentBuilder()

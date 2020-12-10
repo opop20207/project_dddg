@@ -1,6 +1,7 @@
 package com.dddg.project_dddg;
 
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,8 +19,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +38,7 @@ public class FreeboardNewContent extends AppCompatActivity {
     CheckBox anony_chk;
     FirebaseUser user;
     DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference("Freeboard");
+    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User");
     Date now;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +81,26 @@ public class FreeboardNewContent extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                finish();
+                                // Userdata에 없데이트 필요함
+                                userRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        UserData userData = snapshot.getValue(UserData.class);
+                                        userData.freeboardAdd(new Pair<FreeboardData,String>(freeboardData,key));
+                                        userRef.child(user.getUid()).updateChildren(userData.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+                                                    finish();
+                                                }
+                                            }
+                                        });
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                             }
                         }
                     });
