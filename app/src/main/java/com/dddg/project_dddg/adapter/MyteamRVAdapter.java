@@ -1,6 +1,8 @@
 package com.dddg.project_dddg.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -28,6 +31,13 @@ import java.util.ArrayList;
 public class MyteamRVAdapter extends RecyclerView.Adapter<MyteamRVAdapter.ViewHolder> {
     public ArrayList<TeamData> teamDataArrayList;
     Context context;
+    OnItemClickListener mlistener;
+    public interface OnItemClickListener{
+        void onItemClick(View view,int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mlistener = listener;
+    }
     public MyteamRVAdapter(ArrayList<TeamData> teamDataArrayList, Context context) {
         this.teamDataArrayList = teamDataArrayList;
         this.context = context;
@@ -47,7 +57,6 @@ public class MyteamRVAdapter extends RecyclerView.Adapter<MyteamRVAdapter.ViewHo
 
         holder.supervisor.setText(teamDataArrayList.get(position).director);
         holder.coach.setText(teamDataArrayList.get(position).coach);
-
         holder.expand_btn_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +76,25 @@ public class MyteamRVAdapter extends RecyclerView.Adapter<MyteamRVAdapter.ViewHo
         adapter.notifyDataSetChanged();
         Glide.with(holder.itemView).load(TeamImgUrl.Url(teamDataArrayList.get(position).teamname)).into(holder.team_logo_l);
         Glide.with(holder.itemView).load(TeamImgUrl.Url(teamDataArrayList.get(position).teamname)).into(holder.team_logo_s);
+        holder.expand_btn_layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                AlertDialog.Builder builder= new AlertDialog.Builder(context).setTitle("마이팀 삭제").setMessage("삭제하시겠습니까?").setPositiveButton("네", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mlistener.onItemClick(holder.itemView,position);
+                    }
+                }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(context, "취소하셨습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.show();
+                return true;
+
+            }
+        });
     }
 
     @Override

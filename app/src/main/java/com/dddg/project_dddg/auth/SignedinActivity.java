@@ -125,12 +125,6 @@ public class SignedinActivity extends AppCompatActivity implements View.OnClickL
     private void populateProfile(){//로그인된 계정정보 확인
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        TextView emailtxt = (TextView)findViewById(R.id.user_email);
-        emailtxt.setText(
-                TextUtils.isEmpty(user.getEmail()) ? "No email" : user.getEmail());
-        TextView usernametxt = (TextView)findViewById(R.id.user_display_name);
-        usernametxt.setText(
-                TextUtils.isEmpty(user.getDisplayName()) ? "No display name" : user.getDisplayName());
         StringBuilder providerList = new StringBuilder(100);
         providerList.append("Providers used: ");
         if(user.getProviderData()==null||user.getProviderData().isEmpty()){
@@ -153,7 +147,5 @@ public class SignedinActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         }
-        TextView userenabled = (TextView)findViewById(R.id.user_enabled_providers);
-        userenabled.setText(providerList);
     }
 }

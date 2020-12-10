@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class UserData {
     public ArrayList<TeamData> myTeamList;
     public ArrayList <Pair<CommentData,String>>commentList;//<comment, key>
-    public ArrayList<Pair<FreeboardData,String>>freeBoardList;
+    public ArrayList<String>freeBoardList;
     public int point;
 
     public UserData() {
@@ -17,10 +17,13 @@ public class UserData {
         freeBoardList = new ArrayList<>();
         point  = 0;
     }
-    public void freeboardAdd(Pair<FreeboardData,String> a){
+    public void freeboardAdd(String a){
         freeBoardList.add(a);
     }
-    public UserData(ArrayList<TeamData> myTeamList, ArrayList<Pair<CommentData, String>> commentList, ArrayList<Pair<FreeboardData, String>> freeBoardList, int point) {
+    public void commentAdd(Pair<CommentData,String> a){
+        commentList.add(a);
+    }
+    public UserData(ArrayList<TeamData> myTeamList, ArrayList<Pair<CommentData, String>> commentList, ArrayList< String> freeBoardList, int point) {
         this.myTeamList = myTeamList;
         this.commentList = commentList;
         this.freeBoardList = freeBoardList;
@@ -50,11 +53,11 @@ public class UserData {
         this.commentList = commentList;
     }
 
-    public ArrayList<Pair<FreeboardData, String>> getFreeBoardList() {
+    public ArrayList<String> getFreeBoardList() {
         return freeBoardList;
     }
 
-    public void setFreeBoardList(ArrayList<Pair<FreeboardData, String>> freeBoardList) {
+    public void setFreeBoardList(ArrayList<String> freeBoardList) {
         this.freeBoardList = freeBoardList;
     }
 

@@ -7,6 +7,7 @@ import android.transition.Slide;
 import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Adapter;
@@ -61,6 +62,7 @@ public class FreeboardOpenContent extends AppCompatActivity {
     ImageButton cancel;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
     FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User");
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -143,8 +145,27 @@ public class FreeboardOpenContent extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                Toast.makeText(FreeboardOpenContent.this, "댓글완료", Toast.LENGTH_SHORT).show();
-                                commentEditText.setText("");
+                                userRef.child(auth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        UserData userData = snapshot.getValue(UserData.class);
+                                        userData.commentAdd(new Pair<CommentData,String>(upload,contentKey));
+                                        userRef.child(auth.getUid()).updateChildren(userData.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+                                                    Toast.makeText(FreeboardOpenContent.this, "댓글완료", Toast.LENGTH_SHORT).show();
+                                                    commentEditText.setText("");
+                                                }
+                                            }
+                                        });
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
                             }
                         }
                     });

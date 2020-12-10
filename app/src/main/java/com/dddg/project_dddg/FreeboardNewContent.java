@@ -86,7 +86,7 @@ public class FreeboardNewContent extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         UserData userData = snapshot.getValue(UserData.class);
-                                        userData.freeboardAdd(new Pair<FreeboardData,String>(freeboardData,key));
+                                        userData.freeboardAdd(new String(key));
                                         userRef.child(user.getUid()).updateChildren(userData.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {

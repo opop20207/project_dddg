@@ -69,6 +69,16 @@ public class FragmentMyteam extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         MyteamRVAdapter adapter = new MyteamRVAdapter(userteamData, getActivity());
+        adapter.setOnItemClickListener(new MyteamRVAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                userteamData.remove(position);
+                userData.myTeamList.clear();
+                userData.myTeamList.addAll(userteamData);
+                ref.child("User").child(user.getUid()).updateChildren(userData.toMap());
+                adapter.notifyDataSetChanged();
+            }
+        });
         RecyclerView recyclerView = getView().findViewById(R.id.myteam_recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setHasFixedSize(true);
