@@ -38,7 +38,7 @@ public class TeamImgUrl {
                 break;
             case"Jin Air GreenWings": returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FJinAirGreenWings.jpg?alt=media&token=672bb536-6b2a-4a31-a3c8-cc3d7b628a4b";
                 break;
-            case"kt Rolster": returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FKT%EB%A1%A4%EC%8A%A4%ED%84%B0Bullets.jpg?alt=media&token=fc94b041-d30e-4a66-a6e8-fc08bd13cd1e";
+            case"kt Rolster": returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FktRolster.jpg?alt=media&token=b826e2ce-98a8-4153-bca1-a9522fbe961f";
                 break;
             case"MVP": returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FMVP.jpg?alt=media&token=982e91d3-7c9f-4027-af5b-8893e2740fdc";
                 break;
@@ -130,6 +130,9 @@ public class TeamImgUrl {
             case "JDG":returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FJD%20Gaming.png?alt=media&token=fc88d46c-fee6-41fe-8c2e-063fffa911f6";
                 break;
             case "PSG Talon":returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FPSG%20Talon.png?alt=media&token=eb1e2167-2c6a-469c-973c-04b7a55765e3";
+                break;
+            case "hyFresh BLADE":
+            case "hyFresh Blade":returnUrl = "https://firebasestorage.googleapis.com/v0/b/projectdddg.appspot.com/o/Team_img%2FhyFresh%20Blade.png?alt=media&token=2b815e63-5b45-4341-8736-5c962839b970";
                 break;
 
 
